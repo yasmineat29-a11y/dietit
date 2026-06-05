@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>لوحة المتابعة الغذائية الذكية</title>
 <style>
-    /* تنسيقات عامة مرنة ومتوافقة مع الهواتف */
     * { box-sizing: border-box; }
     body { background-color: #f5f7fa; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     .diet-container { direction: rtl; padding: 12px; max-width: 100%; margin: 0 auto; color: #2c3e50; }
@@ -14,13 +13,11 @@
     .diet-header h1 { font-size: 20px; margin: 5px 0; color: #2c3e50; }
     .diet-header p { font-size: 13px; margin: 0; color: #7f8c8d; }
     
-    /* أزرار الروابط - مسميات ملف الإكسيل الحرفية ومتوافقة مع اللمس على الموبايل */
     .btn-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; width: 100%; }
     .nav-btn { color: white; padding: 14px 16px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; width: 100%; font-size: 13px; display: block; line-height: 1.4; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
     .nav-btn.ideal { background-color: #9b59b6; }
     .nav-btn.tdee { background-color: #2ecc71; }
 
-    /* لوحة التحكم والـ Dashboard المستجيبة للموبايل */
     .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
     .dash-card { background: #fff; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); text-align: center; border-bottom: 3.5px solid #3498db; }
     .dash-card.success { border-bottom-color: #2ecc71; }
@@ -28,7 +25,6 @@
     .dash-title { color: #7f8c8d; font-size: 11px; font-weight: bold; }
     .dash-value { font-size: 18px; font-weight: bold; margin-top: 5px; color: #34495e; }
     
-    /* قسم الرسم البياني التفاعلي */
     .chart-box { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); margin-bottom: 20px; text-align: center; }
     .chart-box h3 { margin: 0 0 10px 0; font-size: 15px; color: #34495e; }
     .bar-chart { display: flex; align-items: flex-end; justify-content: space-around; height: 140px; border-bottom: 2px solid #34495e; margin: 10px auto 0 auto; max-width: 280px; }
@@ -38,7 +34,6 @@
     .bar.target-bar { background-color: #2ecc71; }
     .bar-label { font-size: 11px; margin-top: 6px; font-weight: bold; color: #555; }
 
-    /* تنسيقات الجداول والتمرير المرن على الموبايل */
     .table-container { background: #fff; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .section-title { margin: -12px -12px 12px -12px; color: #fff; padding: 12px; border-radius: 8px 8px 0 0; font-size: 14px; font-weight: bold; text-align: center; }
     
@@ -47,19 +42,15 @@
     .diet-table td { padding: 9px 8px; border: 1px solid #ddd; vertical-align: middle; line-height: 1.4; }
     .diet-table tr:nth-child(even) { background-color: #f9f9f9; }
     
-    /* حقول الإدخال الخاصة بجدول المتابعة */
-    .w-input, .c-consumed, .c-target { width: 100%; max-width: 70px; text-align: center; padding: 6px 4px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; -moz-appearance: textfield; }
-    .w-input::-webkit-outer-spin-button, .w-input::-webkit-inner-spin-button,
-    .c-consumed::-webkit-outer-spin-button, .c-consumed::-webkit-inner-spin-button,
-    .c-target::-webkit-outer-spin-button, .c-target::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .w-input, .c-consumed, .c-target { width: 100%; max-width: 70px; text-align: center; padding: 6px 4px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
 </style>
 </head>
 <body>
 
 <div class="diet-container">
     <div class="diet-header">
-        <h1>لوحة المتابعة وجداول البدائل</h1>
-        <p>واجهة مخصصة للموبايل وتعمل بالكامل أوفلاين</p>
+        <h1>لوحة المتابعة وجداول البدائل المحدثة</h1>
+        <p>عرض متوافق تماماً مع الهواتف الذكية - أوفلاين</p>
     </div>
 
     <div class="btn-container">
@@ -96,72 +87,79 @@
         </div>
     </div>
 
+    <!-- نظام التخسيس والتثبيت بعمودين وعناوين محدثة -->
     <div class="table-container" style="border: 1px solid #e67e22; border-top: none;">
         <div class="section-title" style="background-color: #e67e22;">🥗 نظام التخسيس والتثبيت (٣ وجبات + سناك ١)</div>
         <table class="diet-table">
             <thead>
                 <tr>
-                    <th style="width: 22%;">الوجبة</th>
-                    <th style="width: 22%;">السعرات</th>
+                    <th style="width: 25%; text-align: center;">السعرات</th>
                     <th>خيارات الأكلات والبدائل المتاحة للتناوب المباشر</th>
                 </tr>
             </thead>
             <tbody>
-                <tr style="font-weight: bold; color: #d35400; background-color: #fbeee6;"><td colspan="3" style="text-align: center; padding: 6px;">🍳 وجبة الفطور (التخسيس)</td></tr>
-                <tr><td>فطار</td><td style="font-weight:bold; text-align:center;">160 سعر</td><td>خيارات وجبة الفطور النشوية المقدرة بكامل سعراتها المتاحة للتناوب</td></tr>
-                <tr><td>فطار</td><td style="font-weight:bold; text-align:center;">147.5 سعر</td><td>خيارات الفطور والوجبات الصباحية المحددة بالملف بدقة متناهية</td></tr>
-                <tr><td>فطار/عشاء</td><td style="font-weight:bold; text-align:center;">180 سعر</td><td>4 إلى 5 ملاعق فول مدمس (بالزيت) | نصف رغيف بلدي بالجبن القريش أو الفيتا</td></tr>
-                <tr><td>فطار/غداء/عشاء</td><td style="font-weight:bold; text-align:center;">25 سعر</td><td>حصة خضراوات ورقية طازجة أو مطبوخة سعراتها التقديرية بالكامل</td></tr>
-                <tr><td>فطار/عشاء</td><td style="font-weight:bold; text-align:center;">70 سعر</td><td>حصة خضراوات وحصة دهون (25 سعر خضراوات ورقية مطبوخة + 45 سعر دهون مخصصة)</td></tr>
+                <!-- خيارات وجبة الفطور -->
+                <tr style="font-weight: bold; color: #d35400; background-color: #fbeee6;"><td colspan="2" style="text-align: center; padding: 7px; font-size: 14px;">🍳 خيارات وجبة الفطور</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">160 سعر</td><td>رغيف سن | 2 توست بني | رغيف صومالي بني | نصف رغيف بلدي | رغيف خبر شعير | 6 ملاعق كورن فليكس بني | 5 ملاعق شوفان | 4 ملاعق بليلة | 4 ملاعق رقاق العيد ناشف | 1.5 قرص طعمية ايرفراير | 5 ملاعق بطاطس مهروسة مسلوقة | ثمرة بطاطس متوسطة مسلوقة | شريحة رقاق طري | 3 معلقة ك دقيق اسمر او شوفان</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">147.5 سعر</td><td>بيضتان مسلوقتان | 2 بيض أومليت بمسحة زيت | 4 ملاعق قريش بملعقة زيت صغيرة | علبة تونة لايت مصفي | 3 قطع جبنة فيتا لايت (عبور لاند او رودس) بمسحة زيت</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">180 سعر</td><td>4 ل 5 ملاعق فول مدمس بملعقة زيت صغيرة | 4 ل 5 ملاعق فول مدمس بملعقة زيت زيتون صغيرة | نصف رغيف بلدي + جبنة قريش | نصف رغيف بلدي + جبنة فيتا دايت طعمة او عبور او رودس</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">25 سعر</td><td>طماطم | خيار | فلفل رومي | جرجير | خس | كابوتشا | فجل | بروكلي | قرنبيط | باذنجان مشوي او مسلوق | كوسة مسلوقة | فاصوليا خضراء مسلوقة | خضار سوتيه</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">70 سعر</td><td>سلطة خضراء بملعقة زيت زيتون صغيرة | خضار سوتيه بملعقة زيت صغيرة | باذنجان مشوي بالثوم والخل ونصف ملعقة زيت زيتون صغيرة</td></tr>
 
-                <tr style="font-weight: bold; color: #d35400; background-color: #fbeee6;"><td colspan="3" style="text-align: center; padding: 6px;">🍎 سناك الفاصل الواحد (التخسيس)</td></tr>
-                <tr><td>سناك</td><td style="font-weight:bold; text-align:center;">200 سعر</td><td>كوب أرز بلبن مخصص للوجبة كأحد البدائل المتاحة بسعراتها المقدرة بالملف</td></tr>
-                <tr><td>سناك</td><td style="font-weight:bold; text-align:center;">170 سعر</td><td>نصف كوب أرز بلبن سكر معتدل | نصف كوب بطاطا بالقشطة المشوية</td></tr>
-                <tr><td>فطار/سناك</td><td style="font-weight:bold; text-align:center;">80 سعر</td><td>حجم قبضة اليد ثمار فاكهة | تمرة رطب واحدة | كوب عصير بدون سكر | كوب سموزي بدون سكر | خمس ملاعق صغيرة سكر | معلقة كبيرة من العسل | 3 ملاعق كبيرة زبادي</td></tr>
+                <!-- سناك / باليوم الـ free -->
+                <tr style="font-weight: bold; color: #d35400; background-color: #fbeee6;"><td colspan="2" style="text-align: center; padding: 7px; font-size: 14px;">🍎 سناك / باليوم الـ free</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">200 سعر</td><td>كوب ارز بلبن | قطعة بسبوسة | فطيرة صغيرة | 2 قطايف مقلية | كوب بليلة كاملة باللبن والسكر</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">170 سعر</td><td>نصف كوب ارز بلبن | كوب زبادي خلاط ثمرة فاكهة وملعقة عسل صغيرة | نصف كوب بطاطا مشوية بملعقة قشطة صغيرة | قطعة كيكة صغيرة بيتي بالزيت سكر قليل</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">80 سعر</td><td>تفاحة متوسطة | موزة صغيرة | برتقالة متوسطة | 2 جوافة | 2 كمثرى | شريحة بطيخ | شريحة كانتالوب | 12 حبة فراولة | 15 حبة عنب | 4 حبات مشمش | 3 حبات برقوق | 2 حبة تين برشي | 5 حبات كرز | 3 تمرات جافة | تمرة رطب | كوب عصير برتقال بدون سكر | كوب سموزي فراولة او كانتالوب بدون سكر | 5 ملاعق صغيرة سكر | معلقة كبيرة عسل | 3 ملاعق كبيرة زبادي</td></tr>
 
-                <tr style="font-weight: bold; color: #d35400; background-color: #fbeee6;"><td colspan="3" style="text-align: center; padding: 6px;">🍲 وجبة الغداء (التخسيس)</td></tr>
-                <tr><td>غداء</td><td style="font-weight:bold; text-align:center;">235 سعر</td><td>كوب مكرونة بالبروتين | 235 سعر نشويات بشكل أساسي</td></tr>
-                <tr><td>غداء</td><td style="font-weight:bold; text-align:center;">180 سعر</td><td>نصف رغيف بلدي بروتين</td></tr>
-                <tr><td>غداء</td><td style="font-weight:bold; text-align:center;">175 سعر</td><td>كوب شوربة عدس دافئة ومتكاملة القيمة الغذائية بالملف</td></tr>
-                <tr><td>غداء</td><td style="font-weight:bold; text-align:center;">165 سعر</td><td>خيارات نشويات مطبوخة ومحددة بالكامل طبقاً لتقديرات الوجبة الرئيسية المتاحة</td></tr>
-                <tr><td>غداء</td><td style="font-weight:bold; text-align:center;">155 سعر</td><td>خيارات نشويات وبدائل الكربوهيدرات التناوبية المقررة بالملف</td></tr>
-                <tr><td>غداء</td><td style="font-weight:bold; text-align:center;">147.5 سعر</td><td>خيارات الغداء والبدائل التناوبية المحسوبة بذات السعرات المقدرة للوجبة</td></tr>
-                <tr><td>غداء</td><td style="font-weight:bold; text-align:center;">140 سعر</td><td>حصة نشويات وخضار مطبوخ (25 سعر خضار + 115 سعر كربوهيدرات ونشويات مخصصة)</td></tr>
-                <tr><td>غداء</td><td style="font-weight:bold; text-align:center;">75 سعر</td><td>حصة لحوم متوسطة الدسم وسعراتها الصافية المقررة بالملف</td></tr>
-                <tr><td>غداء/سناك</td><td style="font-weight:bold; text-align:center;">205 سعر</td><td>5 حبات ورق عنب | 205 سعر نشويات بشكل أساسي | كوب أرز بلبن</td></tr>
-                <tr><td>غداء/سناك</td><td style="font-weight:bold; text-align:center;">155 سعر</td><td>قطعة بانيه اير فراير (طهي صحي) | 155 سعر كربوهيدرات ونشويات أساسية</td></tr>
-                <tr><td>غداء/سناك</td><td style="font-weight:bold; text-align:center;">37.5 سعر</td><td>نصف حصة بروتين ولحوم متوسطة الدسم معايرة بالكامل</td></tr>
+                <!-- خيارات وجبة الغداء -->
+                <tr style="font-weight: bold; color: #d35400; background-color: #fbeee6;"><td colspan="2" style="text-align: center; padding: 7px; font-size: 14px;">🍲 خيارات وجبة الغداء</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">235 سعر</td><td>كوب مكرونة بالبروتين (مكرونة مسلوقة + لحمة مفرومة متعصجة بدون دهون)</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">180 سعر</td><td>نصف رغيف بلدي + كفتة مشوية ايرفراير او بالفرن | نصف رغيف بلدي + كبدة مشوية بدون دهون اضافية</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">175 سعر</td><td>كوب شوربة عدس (عدس + جزر + طماطم + بصل) بدون شعرية او دهون اضافية مع ربع رغيف محمص بالفرن</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">165 سعر</td><td>8 ملاعق ارز بسمتي مسلوق بدون زيت | 6 ملاعق ارز مصري مطبوخ بمسحة زيت | 6 ملاعق مكرونة مسلوقة بصلصة بدون زيت | كوب فريك مطبوخ بدون دهون | كوب برغل مطبوخ بدون دهون</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">155 سعر</td><td>صدر دجاجة مشوي بدون جلد | 2 قطعة لحم حمراء مسلوقة او مشوية بدون دهون | 2 سمكة بلطي متوسطة مشوية | قطعة سمك بوري متوسطة مشوية | علبة تونة لايت مصفاة</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">147.5 سعر</td><td>ورك دجاجة مشوي بدون جلد | 2 قطعة لحم ملبسة مسلوقة | 3 قطع كفتة مشوية بالفرن | 3 بيضات أومليت بمسحة زيت | 5 ملاعق ك جبنة فيتا لايت</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">140 سعر</td><td>6 ملاعق ارز مصري مطبوخ + 4 ملاعق خضار مطبوخ (بامية او فاصوليا او بسلة) بصلصة بدون دهون</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">75 سعر</td><td>قطعة لحم حمراء صغيرة مسلوقة | نصف صدر دجاجة مشوي بدون جلد | سمكة بلطي صغيرة مشوية</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">205 سعر</td><td>5 حبات ورق عنب | كوب ارز بلبن | قطعة بسبوسة صغيرة | 2 قطعة قطايف بالجبنة ايرفراير | كوب بليلة متوسط باللبن والسكر</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">155 سعر</td><td>قطعة بانيه اير فراير | قطعة كيكة اسفنجية دايت صغيرة | 3 أصابع زينب بالفرن | كوب غزل البنات | شريحة بسبوسة دايت</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">37.5 سعر</td><td>نصف قطعة لحم حمراء مسلوقة | ربع صدر دجاجة مشوي بدون جلد | نصف سمكة بلطي صغيرة مشوية</td></tr>
 
-                <tr style="font-weight: bold; color: #d35400; background-color: #fbeee6;"><td colspan="3" style="text-align: center; padding: 6px;">🌙 وجبة العشاء (التخسيس)</td></tr>
-                <tr><td>غداء/عشاء</td><td style="font-weight:bold; text-align:center;">125 سعر</td><td>شريحة توست بمسحة زبدة محمص | نصف كوب بطاطس مسلوقة بنصف معلقة زبدة او ملعقة قشطة | 3 ملاعق مكرونة بالزبدة والجبنة الرومي/البرميزان | 3 ملاعق أرز أبيض بالسمن</td></tr>
+                <!-- خيارات وجبة العشاء -->
+                <tr style="font-weight: bold; color: #d35400; background-color: #fbeee6;"><td colspan="2" style="text-align: center; padding: 7px; font-size: 14px;">🌙 خيارات وجبة العشاء</td></tr>
+                <tr><td style="font-weight:bold; text-align:center;">125 سعر</td><td>شريحة توست بمسحة زبدة محمص | نصف كوب بطاطس مسلوقة بنصف معلقة زبدة او ملعقة قشطة | 3 ملاعق مكرونة بالزبدة والجبنة الرومي/البرميزان | 3 ملاعق أرز أبيض بالسمن</td></tr>
             </tbody>
         </table>
     </div>
 
+    <!-- نظام زيادة الوزن بعمودين وعناوين محدثة -->
     <div class="table-container" style="border: 1px solid #9b59b6; border-top: none;">
         <div class="section-title" style="background-color: #9b59b6;">🥞 نظام زيادة الوزن (٣ وجبات + ٥ سناكات)</div>
         <table class="diet-table">
             <thead>
                 <tr>
-                    <th style="width: 22%;">الوجبة</th>
-                    <th style="width: 22%;">السعرات</th>
+                    <th style="width: 25%; text-align: center;">السعرات</th>
                     <th>خيارات الأكلات والبدائل المتاحة للتناوب المباشر</th>
                 </tr>
             </thead>
             <tbody>
-                <tr style="font-weight: bold; color: #6c3483; background-color: #f4ecf7;"><td colspan="3" style="text-align: center; padding: 6px;">🍽️ الوجبات الثلاث الأساسية (فطار / غداء / عشاء)</td></tr>
-                <tr><td>غداء/فطار/عشاء</td><td style="font-weight:bold; text-align:center; color:#27ae60;">195 سعر</td><td>1/2 رغيف صغير بروتين محمص بالزيت | بيتزا صغيرة بالجبن أو بروتين دسم | فطيرة جبنة صغيرة</td></tr>
+                <!-- الوجبات الرئيسية الثلاث لزيادة الوزن -->
+                <tr style="font-weight: bold; color: #6c3483; background-color: #f4ecf7;"><td colspan="2" style="text-align: center; padding: 7px; font-size: 14px;">🍽️ خيارات الوجبات الثلاث الأساسية (فطار / غداء / عشاء)</td></tr>
+                <tr><td style="font-weight:bold; text-align:center; color:#27ae60;">195 سعر</td><td>1/2 رغيف صغير بروتين محمص بالزيت | بيتزا صغيرة بالجبن او بروتين دسم | فطيرة جبنة صغيرة | كريب صغير بالبطاطس والمايونيز | حواوشي صغير بنسبة دهون عالية</td></tr>
 
-                <tr style="font-weight: bold; color: #6c3483; background-color: #f4ecf7;"><td colspan="3" style="text-align: center; padding: 6px;">🍰 السناكات الخمسة المتخللة لزيادة الوزن (٥ سناك)</td></tr>
-                <tr><td>سناك ١</td><td style="font-weight:bold; text-align:center; color:#27ae60;">225 سعر</td><td>قطعة كنافة بالجبنة | قطعتين قطايف بالجبنة | 225 سعر سعر نشويات بشكل أساسي</td></tr>
-                <tr><td>سناك ٢</td><td style="font-weight:bold; text-align:center; color:#27ae60;">205 سعر</td><td>قطعة بسبوسة | فطير بلدي صغير (حجم كف اليد لتدعيم الطاقة السريعة)</td></tr>
-                <tr><td>سناك ٣</td><td style="font-weight:bold; text-align:center; color:#27ae60;">165 سعر</td><td>165 سعر كربوهيدرات بشكل أساسي لتدعيم الطاقة وزيادة الوزن المقدر بالملف</td></tr>
-                <tr><td>سناك ٤</td><td style="font-weight:bold; text-align:center; color:#27ae60;">160 سعر</td><td>2 كربوهيدرات كاملة صافية (160 سعر كربوهيدرات للوجبة التناوبية المفتوحة بالملف)</td></tr>
-                <tr><td>سناك ٥ / غداء</td><td style="font-weight:bold; text-align:center; color:#27ae60;">125 سعر</td><td>خيارات تعزيز الكثافة السعراتية المتكاملة والمقدرة للوزن بالكامل في السناكات التناوبية</td></tr>
+                <!-- خيارات السناكات الخمسة المتتالية لزيادة الوزن -->
+                <tr style="font-weight: bold; color: #6c3483; background-color: #f4ecf7;"><td colspan="2" style="text-align: center; padding: 7px; font-size: 14px;">🍰 خيارات السناكات الخمسة المتتالية</td></tr>
+                <tr><td style="font-weight:bold; text-align:center; color:#27ae60;">225 سعر</td><td>قطعة كنافة بالجبنة | قطعتين قطايف بالجبنة | قطعة جلاش بالمكسرات والشراب | قطعة هريسة دسمة | طاجن أم علي مخصص بالقمح واللبن الكامل والقشطة والمكسرات والسكر</td></tr>
+                <tr><td style="font-weight:bold; text-align:center; color:#27ae60;">205 سعر</td><td>قطعة بسبوسة | فطير بلدي صغير | قطعة تارت فواكه بالكريمة | كوب ميلك شيك دسم بالآيس كريم | قطعة سينابون صغيرة بالصوص الأبيض</td></tr>
+                <tr><td style="font-weight:bold; text-align:center; color:#27ae60;">165 سعر</td><td>كوب عصير قصب كبير | كوب عصير مانجو محلى بملعقتين سكر وكريمة | 4 تمرات مجففة محشوة بالمكسرات | شريحة حلاوة طحينية متوسطة | كيس مقرمشات صغير</td></tr>
+                <tr><td style="font-weight:bold; text-align:center; color:#27ae60;">160 سعر</td><td>كوب كاكاو باللبن كامل الدسم وملعقتين سكر | 2 مغرفة مغات بالسمن والمكسرات | 50 جرام مكسرات مشكلة (لوز، فستق، كاجو) | كيس شيبسي حجم صغير | قطعة شوكولاتة باللبن متوسطة</td></tr>
+                <tr><td style="font-weight:bold; text-align:center; color:#27ae60;">125 سعر</td><td>سندوتش حلاوة بالقشطة صغير | سندوتش مربى بالزبدة صغير | كوب عصير موز باللبن كامل الدسم ومحلى بالعسل | 3 قطع بسكويت بالتمر | علبة بيريل أو كانز مياه غازية عادية Full Sugar</td></tr>
             </tbody>
         </table>
     </div>
 
+    <!-- جدول المتابعة الشهرية لـ 30 يوماً كاملاً كما هو دون أي تغيير -->
     <div class="table-container" style="border: 1px solid #2980b9; border-top: none;">
         <div class="section-title" style="background-color: #2980b9;">📅 جدول المتابعة اليومية المقارن (30 يوماً)</div>
         <table class="diet-table" style="text-align:center;">
@@ -175,7 +173,8 @@
                 </tr>
             </thead>
             <tbody id="monthly-table-rows">
-                </tbody>
+                <!-- سيتم إنشاؤها عبر جافا سكريبت -->
+            </tbody>
         </table>
     </div>
 </div>
@@ -184,7 +183,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tableBody = document.getElementById("monthly-table-rows");
     
-    // بناء 30 يوماً بدقة لملائمة شاشة الموبايل باللمس
+    // بناء الأيام الـ 30
     for (let day = 1; day <= 30; day++) {
         let tr = document.createElement("tr");
         tr.innerHTML = `
@@ -197,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function() {
         tableBody.appendChild(tr);
     }
 
-    // المعالجة اللحظية للحسابات والرسم البياني بلحظتها أوفلاين
+    // إدارة الحسابات التفاعلية والرسم البياني بلحظتها أوفلاين
     tableBody.addEventListener("input", function() {
         let totalConsumed = 0;
         let totalTarget = 0;
@@ -243,7 +242,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        // تحديث إحصائيات لوحة التحكم العلوية
         document.getElementById("web-committed-days").textContent = committedDaysCount + " يوم";
         
         let avgConsumed = consumedCount > 0 ? Math.round(totalConsumed / consumedCount) : 0;
@@ -251,7 +249,6 @@ document.addEventListener("DOMContentLoaded", function() {
         
         document.getElementById("web-min-weight").textContent = registeredWeights.length > 0 ? Math.min(...registeredWeights) + " كجم" : "- كجم";
 
-        // تحديث أعمدة الرسم البياني محلياً بالكامل
         let avgTarget = targetCount > 0 ? Math.round(totalTarget / targetCount) : 0;
         
         let maxVal = Math.max(avgConsumed, avgTarget, 1000);
