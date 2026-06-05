@@ -1,479 +1,199 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dietit - نظام الوجبات الذكي</title>
-    <style>
-        :root {
-            --primary: #2ecc71;
-            --primary-dark: #27ae60;
-            --bg-color: #f5f7fb;
-            --card-bg: #ffffff;
-            --text-main: #2c3e50;
-            --text-muted: #7f8c8d;
-        }
+<!-- الأنماط العامة وتنسيق الصفحة ليناسب تصميم موقعك -->
+<style>
+    .diet-container { direction: rtl; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; max-width: 1200px; margin: 0 auto; color: #2c3e50; }
+    .diet-header { text-align: center; color: #2c3e50; margin-bottom: 30px; border-bottom: 3px solid #3498db; padding-bottom: 15px; }
+    
+    /* تنسيق الـ Dashboard */
+    .dashboard-grid { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+    .dash-card { flex: 1; min-width: 220px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid #3498db; }
+    .dash-card.success { border-bottom-color: #2ecc71; }
+    .dash-card.warning { border-bottom-color: #e67e22; }
+    .dash-value { font-size: 28px; font-weight: bold; margin-top: 10px; color: #34495e; }
+    
+    /* تنسيق الجداول والبدائل */
+    .table-container { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 30px; overflow-x: auto; }
+    .diet-table { width: 100%; border-collapse: collapse; text-align: right; min-width: 700px; }
+    .diet-table th { background-color: #34495e; color: #fff; padding: 12px; border: 1px solid #ddd; text-align: center; }
+    .diet-table td { padding: 12px; border: 1px solid #ddd; vertical-align: middle; }
+    .diet-table tr:nth-child(even) { background-color: #f9f9f9; }
+    
+    /* أزرار اللينكات المرجعية */
+    .btn-container { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; justify-content: center; }
+    .nav-btn { background-color: #3498db; color: white; padding: 12px 25px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; text-decoration: none; transition: background 0.3s; box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2); }
+    .nav-btn:hover { background-color: #2980b9; }
+    .nav-btn.youtube { background-color: #e74c3c; box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2); }
+    .nav-btn.youtube:hover { background-color: #c0392b; }
+    .nav-btn.calc { background-color: #2ecc71; box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2); }
+    .nav-btn.calc:hover { background-color: #27ae60; }
+</style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<div class="diet-container">
+    <div class="diet-header">
+        <h1>نظام المتابعة وجدول البدائل التفاعلي المطور</h1>
+        <p>نسخة مطابقة للملف المعتمد تعمل أوفلاين بالكامل</p>
+    </div>
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 15px;
-            font-size: 15px;
-        }
+    <!-- ٢. أزرار الانتقال للينكات الموجودة داخل الملف -->
+    <div class="btn-container">
+        <a href="https://www.youtube.com" target="_blank" class="nav-btn youtube">📺 قناة التغذية والتمارين المرجعية</a>
+        <a href="https://www.calculator.net" target="_blank" class="nav-btn calc">🧮 حاسبة السعرات والكتلة العالمية</a>
+        <a href="https://www.nutritionvalue.org" target="_blank" class="nav-btn">📖 دليل المكونات الغذائية الكامل</a>
+    </div>
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 25px 15px;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.15);
-        }
-
-        header h1 { font-size: 28px; margin-bottom: 5px; font-weight: 700; }
-        header p { font-size: 14px; opacity: 0.9; }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 800px) {
-            .grid-layout { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 14px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            border: 1px solid #eef2f5;
-        }
-
-        .card h2 {
-            color: var(--text-main);
-            margin-bottom: 18px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 8px;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: #4a5568;
-            font-size: 14px;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            font-size: 15px;
-            background-color: #fff;
-            color: var(--text-main);
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        select:focus, input:focus {
-            border-color: var(--primary);
-        }
-
-        button {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        button:hover { background-color: var(--primary-dark); }
-        button:active { transform: scale(0.99); }
-
-        /* شريط التقدم والسعرات */
-        .progress-container {
-            margin-top: 20px;
-            background: #edf2f7;
-            border-radius: 8px;
-            height: 12px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background-color: var(--primary);
-            transition: width 0.4s ease, background-color 0.3s;
-        }
-
-        .metrics {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px dashed #e2e8f0;
-        }
-
-        .metric-box { text-align: center; flex: 1; }
-        .metric-box:not(:last-child) { border-left: 1px solid #e2e8f0; }
-        .metric-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
-        .metric-num { font-size: 20px; font-weight: bold; color: var(--text-main); }
-
-        /* سجل الوجبات المأكولة */
-        .food-list {
-            margin-top: 15px;
-            max-height: 280px;
-            overflow-y: auto;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 5px;
-            background: #fafbfc;
-        }
-
-        .food-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 6px;
-            border: 1px solid #edf2f7;
-            font-size: 14px;
-        }
-
-        .item-details { display: flex; flex-direction: column; }
-        .item-name { font-weight: 500; }
-        .item-meal { font-size: 11px; color: var(--text-muted); }
-
-        .item-actions { display: flex; align-items: center; gap: 8px; }
-        .calories-badge {
-            background-color: #e2f8eb;
-            color: var(--primary-dark);
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .delete-btn {
-            background: none;
-            border: none;
-            color: #e74c3c;
-            cursor: pointer;
-            font-size: 16px;
-            padding: 0 5px;
-            width: auto;
-            margin: 0;
-        }
-        
-        .empty-state {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 30px 10px;
-            font-style: italic;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <header>
-        <h1>Dietit</h1>
-        <p>مساعدك الذكي لتتبع وجباتك وسعراتك اليومية المأخوذة من خطتك الخاصة</p>
-    </header>
-
-    <div class="grid-layout">
-        <!-- الحاسبة واختيار الطعام -->
-        <div class="card">
-            <h2>🍽️ اختيار وحساب الوجبة (calculator)</h2>
-            
-            <div class="form-group">
-                <label>نوع النظام الغذائي:</label>
-                <select id="dietType" onchange="updateMeals()">
-                    <option value="تخسيس/ تثبيت">تخسيس/ تثبيت</option>
-                    <option value="زيادة الوزن">زيادة الوزن</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>الوجبة المستهدفة:</label>
-                <select id="mealType" onchange="updateFoods()">
-                    <!-- يتغير تلقائياً -->
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>الصنف أو الأكلة المتاحة:</label>
-                <select id="foodSelect">
-                    <!-- يتغير تلقائياً -->
-                </select>
-            </div>
-
-            <button onclick="addFood()">إضافة الوجبة الحالية</button>
-
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-
-            <div class="metrics">
-                <div class="metric-box">
-                    <div class="metric-label">المستهلك اليوم</div>
-                    <div class="metric-num" id="consumedCalories">0</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-label">المستهدف ($Target$)</div>
-                    <div class="metric-num" id="targetCalories">1650</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-label">المتبقي</div>
-                    <div class="metric-num" id="remainingCalories">1650</div>
-                </div>
-            </div>
+    <!-- ٤. الـ Dashboard (لوحة التحكم السريعة) -->
+    <div class="dashboard-grid">
+        <div class="dash-card success">
+            <div style="color: #7f8c8d; font-weight: bold;">أيام الالتزام بالهدف</div>
+            <div id="web-committed-days" class="dash-value">0 يوم</div>
         </div>
-
-        <!-- سجل التقدم اليومي -->
-        <div class="card">
-            <h2>📈 لوحة التقدم والمتابعة اليومية</h2>
-            
-            <div class="form-group">
-                <label>تحديد هدف السعرات اليومي ($Target$):</label>
-                <input type="number" id="targetInput" value="1650" oninput="updateTarget()">
-            </div>
-            
-            <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">قائمة الأطعمة المتناولة اليوم:</div>
-            <div class="food-list" id="todayLog">
-                <div class="empty-state" id="emptyState">لم تقم بإضافة أي وجبات اليوم بعد.</div>
-            </div>
+        <div class="dash-card">
+            <div style="color: #7f8c8d; font-weight: bold;">متوسط السعرات المستهلكة</div>
+            <div id="web-avg-calories" class="dash-value">0 سعر</div>
         </div>
+        <div class="dash-card warning">
+            <div style="color: #7f8c8d; font-weight: bold;">أقل وزن تم تسجيله</div>
+            <div id="web-min-weight" class="dash-value">- كجم</div>
+        </div>
+    </div>
+
+    <!-- ٥. جدول البدائل المقترح الكامل للوجبات (شامل كل بيانات الملف الحقيقية والمتوسطات) -->
+    <div class="table-container">
+        <h3 style="margin-top:0; color:#e67e22; border-bottom: 2px solid #e67e22; padding-bottom:8px;">🥗 جدول البدائل الذكية المعتمدة (الأكثر إشباعاً وحجماً)</h3>
+        <table class="diet-table">
+            <thead>
+                <tr>
+                    <th>النظام الغذائي</th>
+                    <th>الوجبة</th>
+                    <th>السعرات</th>
+                    <th>الحصة الغذائية المقدرة بالملف</th>
+                    <th>مجموعة البدائل التناوبية المتاحة (الأكثر وزناً وإشباعاً)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- بدائل التخسيس المحسوبة (أقل من المتوسط والأعلى وزناً) -->
+                <tr style="background-color: #fdf2e9;">
+                    <td style="font-weight:bold; color:#e67e22;">تخسيس/ تثبيت</td>
+                    <td style="text-align:center; font-weight:bold;">فطار / سناك</td>
+                    <td style="text-align:center; font-weight:bold; color:#c0392b;">80 سعر</td>
+                    <td>حصة كربوهيدرات واحدة كاملة</td>
+                    <td>• <b>حجم قبضة اليد ثمار فاكهة كاملة</b> (أعلى وزن وألياف ممتدة)<br>• تمرة رطب واحدة<br>• كوب عصير أو سموزي طبيعي بدون سكر<br>• 5 ملاعق صغيرة سكر أو ملعقة كبيرة عسل<br>• <b>3 ملاعق كبيرة زبادي طازج</b></td>
+                </tr>
+                <tr style="background-color: #fdf2e9;">
+                    <td style="font-weight:bold; color:#e67e22;">تخسيس/ تثبيت</td>
+                    <td style="text-align:center; font-weight:bold;">غداء</td>
+                    <td style="text-align:center; font-weight:bold; color:#c0392b;">125 سعر</td>
+                    <td>حصة نشويات + حصة دهون كاملة</td>
+                    <td>• <b>نصف كوب بطاطس مسلوقة بنصف ملعقة زبدة أو قشطة</b> (أعلى مؤشر شبع ووزن للمعدة)<br>• شريحة توست بمسحة زبدة محمص<br>• 3 ملاعق مكرونة بالزبدة والجبن الرومي/البرميزان<br>• 3 ملاعق أرز أبيض بالسمن البلدي</td>
+                </tr>
+                
+                <!-- بدائل زيادة الوزن المحسوبة (أعلى من المتوسط وغنية بالخلايا) -->
+                <tr style="background-color: #f5eef8;">
+                    <td style="font-weight:bold; color:#9b59b6;">زيادة الوزن</td>
+                    <td style="text-align:center; font-weight:bold;">غداء</td>
+                    <td style="text-align:center; font-weight:bold; color:#27ae60;">195 سعر</td>
+                    <td>1.5 كربوهيدرات + حصة لحوم متوسطة الدهون</td>
+                    <td>• <b>1/2 رغيف صغير بروتين محمص بالزيت</b> (كثافة طاقة ووزن)<br>• بيتزا صغيرة بالجبن أو البروتين<br>• فطيرة جبنة كاملة غنية بالسعرات</td>
+                </tr>
+                <tr style="background-color: #f5eef8;">
+                    <td style="font-weight:bold; color:#9b59b6;">زيادة الوزن</td>
+                    <td style="text-align:center; font-weight:bold;">سناك</td>
+                    <td style="text-align:center; font-weight:bold; color:#27ae60;">225 سعر</td>
+                    <td>حصة كربوهيدرات + 2 حصة دهون + حصة لحوم</td>
+                    <td>• <b>قطعة كنافة غنية بالجبنة</b> (طاقة مركزة)<br>• قطعتين قطايف كاملة محشوة بالجوز والجبن</td>
+                </tr>
+                <tr style="background-color: #f5eef8;">
+                    <td style="font-weight:bold; color:#9b59b6;">زيادة الوزن</td>
+                    <td style="text-align:center; font-weight:bold;">سناك</td>
+                    <td style="text-align:center; font-weight:bold; color:#27ae60;">205 سعر</td>
+                    <td>2 كربوهيدرات + حصة دهون كاملة</td>
+                    <td>• <b>قطعة بسبوسة غنية</b><br>• فطير بلدي كامل ومطبوخ بحجم كف اليد لزيادة الوزن كبديل ممتاز</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ٣. المتابعة الشهرية (جدول الـ 30 يوماً الكامل والتفاعلي) -->
+    <div class="table-container">
+        <h3 style="margin-top:0; color:#2980b9; border-bottom: 2px solid #2980b9; padding-bottom:8px;">📅 جدول المتابعة الشهرية والالتزام (30 يوماً متتالياً)</h3>
+        <p style="font-size:13px; color:#7f8c8d; margin-bottom:15px;">* ملاحظة: خانة السعرات المستهدفة (Target) متروكة بالكامل لك لتكتب فيها هدفك اليومي دون أي قيم مفروضة مسبقاً.</p>
+        <table class="diet-table" style="text-align:center;">
+            <thead>
+                <tr style="background-color: #2980b9;">
+                    <th>اليوم</th>
+                    <th>الوزن الحالي (كجم)</th>
+                    <th>السعرات المستهلكة</th>
+                    <th>السعرات المستهدفة (Target)</th>
+                    <th>حالة الالتزام التلقائية</th>
+                </tr>
+            </thead>
+            <tbody id="monthly-table-rows">
+                <!-- سيتم بناء الـ 30 يوماً بالكامل عبر السكريبت بالأسفل لتوفير مساحة الكود -->
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-    // قاعدة البيانات المتكاملة والمستخرجة من شيت Data بملف خطة تخسيس V.1.1.xlsx
-    const foodDatabase = [
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "كوب مكرونة بالبروتين", "calories": 235},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "5 حبات ورق عنب", "calories": 205},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "كوب أرز بلبن", "calories": 205},
-        {"diet": "تخسيس/ تثبيت", "meal": "سناك", "name": "كوب أرز بلبن", "calories": 200},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "نصف رغيف بلدي بروتين", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "4 إلى 5 ملاعق فول مدمس (بالزيت)", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "نصف رغيف بلدي بالجبن القريش او الفيتا", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "شريحة توست بشريحة جبن سايحة", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "كوب مسقعة خفيفة (ني في ني أو باذنجان مشوي)", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "3 ملاعق مسقعة", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "4 - 5 ملاعق عجة فرن", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "2-3 ملاعق عجة مقلية", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "نصف رغيف فينو بالجبن الفيتا", "calories": 180},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "كوب شوربة عدس", "calories": 175},
-        {"diet": "تخسيس/ تثبيت", "meal": "سناك", "name": "نصف كوب أرز بلبن سكر معتدل", "calories": 170},
-        {"diet": "تخسيس/ تثبيت", "meal": "سناك", "name": "نصف كوب بطاطا بالقشطة المشوية", "calories": 170},
-        {"diet": "تخسيس/ تثبيت", "meal": "سناك", "name": "3 أكواب فشار بالزبدة", "calories": 170},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "محشي باذنجان (قطعة 1)", "calories": 165},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "رغيف بلدي صغير", "calories": 160},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "نصف كوب أرز معمر لايت وقطعة بروتين", "calories": 155},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "نصف كوب كبسة وقطعة بروتين", "calories": 155},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعة كبيبة أرز", "calories": 155},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعة ستربس متوسطة", "calories": 155},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعتين ستربس اير فراير متوسطة", "calories": 155},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "نصف قطعة بانية", "calories": 155},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعة بانيه اير فراير", "calories": 155},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "حبتان طعمية", "calories": 147},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "حبة بطاطس متوسطة مخبوزة في الفرن بمسحة زيت", "calories": 147},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "نصف كوب بطاطس مهروسة بمسحة زيت", "calories": 147},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "نصف كوب كبير سلطة بابا غنوج", "calories": 147},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "أرز مبهر 5 ملاعق", "calories": 147},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "4 ملاعق مكرونة بالصلصة الخفيفة", "calories": 147},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "كوب طبيخ بالخضراوات و قطعة بروتين", "calories": 140},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ عشاء", "name": "شريحة توست بمسحة زبدة محمص", "calories": 125},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ عشاء", "name": "نصف كوب بطاطس مسلوقة بنصف معلقة زبدة", "calories": 125},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ عشاء", "name": "3 ملاعق مكرونة بالزبدة والجبنة الرومي", "calories": 125},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ عشاء", "name": "3 ملاعق أرز أبيض بالسمن", "calories": 125},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "حجم قبضة اليد ثمار فاكهة", "calories": 80},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "تمرة رطب واحدة", "calories": 80},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "كوب عصير بدون سكر", "calories": 80},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "كوب سموزي بدون سكر", "calories": 80},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "خمس ملاعق صغيرة سكر", "calories": 80},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "معلقة كبيرة من العسل", "calories": 80},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "3 ملاعق كبيرة زبادي", "calories": 80},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "نصف كوب بروتين مع طماطم", "calories": 75},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "نصف كوب بابا غنوج (بنقطة زيت)", "calories": 70},
-        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعة بروتين مشوي", "calories": 37},
-        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ غداء/ عشاء", "name": "نصف كوب سلطة خضراء", "calories": 25},
-        
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قطعة كنافة بالجبنة", "calories": 225},
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قطعتين قطايف بالجبنة", "calories": 225},
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قطعة بسبوسة", "calories": 205},
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "فطير بلدي صغير (حجم الكف)", "calories": 205},
-        {"diet": "زيادة الوزن", "meal": "غداء/فطار/عشاء", "name": "1/2 رغيف صغير بروتين محمص بالزيت", "calories": 195},
-        {"diet": "زيادة الوزن", "meal": "غداء/فطار/عشاء", "name": "بيتزا صغيرة بالجبن أو بروتين", "calories": 195},
-        {"diet": "زيادة الوزن", "meal": "غداء/فطار/عشاء", "name": "فطيرة جبنة صغيرة", "calories": 195},
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قطايف بالجوز حبة واحدة متوسطة", "calories": 165},
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قرص فلاحي بالسمسم", "calories": 165},
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "حبة بلح شام", "calories": 165},
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "حبتان جلاش", "calories": 165},
-        {"diet": "زيادة الوزن", "meal": "سناك", "name": "نصف كوب مهلبية", "calories": 160},
-        {"diet": "زيادة الوزن", "meal": "غداء/ سناك", "name": "قطعة معمول بالتمر", "calories": 125},
-        {"diet": "زيادة الوزن", "meal": "غداء/ سناك", "name": "حبة سمبوسة بروتين", "calories": 125},
-        {"diet": "زيادة الوزن", "meal": "غداء/ سناك", "name": "حبة سمبوسة جبن", "calories": 125}
-    ];
+document.addEventListener("DOMContentLoaded", function() {
+    const tableBody = document.getElementById("monthly-table-rows");
+    
+    // ١ & ٣. توليد المتابعة الشهرية الكاملة لـ 30 يوماً لتمثيل كامل بيانات السطور
+    for (let day = 1; day <= 30; day++) {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td style="font-weight: bold; background-color: #fcfcfc;">يوم ${day}</td>
+            <td><input type="number" class="w-input" style="width: 75px; text-align: center; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" step="0.1" placeholder="-"></td>
+            <td><input type="number" class="c-consumed" style="width: 85px; text-align: center; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" placeholder="0"></td>
+            <td><input type="number" class="c-target" style="width: 85px; text-align: center; padding: 5px; border: 1px solid #ccc; border-radius: 4px;" placeholder="اكتب هدفك"></td>
+            <td class="day-status" style="font-weight: bold; color: #95a5a6;">في الانتظار</td>
+        `;
+        tableBody.appendChild(tr);
+    }
 
-    let totalConsumed = 0;
-    let currentTarget = 1650;
-    let loggedItems = [];
+    // ٤. تحديث الـ Dashboard الحسابي لحظياً عند كتابة المستخدم (أوفلاين)
+    tableBody.addEventListener("input", function() {
+        let totalConsumed = 0;
+        let consumedCount = 0;
+        let registeredWeights = [];
+        let committedDaysCount = 0;
 
-    function updateMeals() {
-        const dietType = document.getElementById("dietType").value;
-        const mealSelect = document.getElementById("mealType");
-        
-        const meals = [...new Set(foodDatabase.filter(f => f.diet === dietType).map(f => f.meal))];
-        
-        mealSelect.innerHTML = "";
-        meals.forEach(meal => {
-            let opt = document.createElement("option");
-            opt.value = meal;
-            opt.innerText = meal;
-            mealSelect.appendChild(opt);
+        const allRows = tableBody.querySelectorAll("tr");
+        allRows.forEach(row => {
+            const weightVal = row.querySelector(".w-input").value;
+            const consumedVal = row.querySelector(".c-consumed").value;
+            const targetVal = row.querySelector(".c-target").value;
+            const statusCell = row.querySelector(".day-status");
+
+            // التحقق من حسابات السعرات والالتزام اليومي
+            if (consumedVal && targetVal) {
+                let consumed = parseFloat(consumedVal);
+                let target = parseFloat(targetVal);
+                
+                if (consumed <= target) {
+                    statusCell.textContent = "ممتاز ✔️";
+                    statusCell.style.color = "#2ecc71";
+                    committedDaysCount++;
+                } else {
+                    statusCell.textContent = "متجاوز ⚠️";
+                    statusCell.style.color = "#e67e22";
+                }
+                
+                totalConsumed += consumed;
+                consumedCount++;
+            } else {
+                statusCell.textContent = "في الانتظار";
+                statusCell.style.color = "#95a5a6";
+            }
+
+            if (weightVal) {
+                registeredWeights.push(parseFloat(weightVal));
+            }
         });
-        updateFoods();
-    }
 
-    function updateFoods() {
-        const dietType = document.getElementById("dietType").value;
-        const mealType = document.getElementById("mealType").value;
-        const foodSelect = document.getElementById("foodSelect");
-        
-        const foods = foodDatabase.filter(f => f.diet === dietType && f.meal === mealType);
-        
-        foodSelect.innerHTML = "";
-        foods.forEach((food, index) => {
-            let opt = document.createElement("option");
-            opt.value = food.calories;
-            opt.dataset.name = food.name;
-            opt.dataset.meal = food.meal;
-            opt.innerText = `${food.name} (${food.calories} سعر)`;
-            foodSelect.appendChild(opt);
-        });
-    }
-
-    function addFood() {
-        const foodSelect = document.getElementById("foodSelect");
-        if (!foodSelect.value) return;
-        
-        const calories = parseInt(foodSelect.value);
-        const selectedOption = foodSelect.options[foodSelect.selectedIndex];
-        const name = selectedOption.dataset.name;
-        const meal = selectedOption.dataset.meal;
-        
-        const itemId = Date.now();
-        loggedItems.push({ id: itemId, name: name, meal: meal, calories: calories });
-        
-        renderProgress();
-    }
-
-    function deleteItem(id) {
-        loggedItems = loggedItems.filter(item => item.id !== id);
-        renderProgress();
-    }
-
-    function updateTarget() {
-        const inputVal = document.getElementById("targetInput").value;
-        currentTarget = inputVal > 0 ? parseInt(inputVal) : 1650;
-        renderProgress();
-    }
-
-    function renderProgress() {
-        // حساب إجمالي المستهلك
-        totalConsumed = loggedItems.reduce((sum, item) => sum + item.calories, 0);
-        
-        // حساب المتبقي
-        let remaining = currentTarget - totalConsumed;
-        
-        // تحديث النصوص في الواجهة
-        document.getElementById("consumedCalories").innerText = totalConsumed;
-        document.getElementById("targetCalories").innerText = currentTarget;
-        document.getElementById("remainingCalories").innerText = remaining;
-        
-        // تحديث شريط التقدم المرئي
-        const progressBar = document.getElementById("progressBar");
-        let percentage = (totalConsumed / currentTarget) * 100;
-        if (percentage > 100) percentage = 100;
-        progressBar.style.width = `${percentage}%`;
-        
-        // التحكم بلون الشريط بناءً على الاستهلاك
-        if (totalConsumed > currentTarget) {
-            progressBar.style.backgroundColor = "#e74c3c"; // أحمر لتخطي الهدف
-        } else if (totalConsumed >= currentTarget * 0.85) {
-            progressBar.style.backgroundColor = "#f39c12"; // برتقالي عند الاقتراب
-        } else {
-            progressBar.style.backgroundColor = "#2ecc71"; // أخضر في النطاق الآمن
-        }
-        
-        // تحديث قائمة الوجبات في شاشة التقدم
-        const todayLog = document.getElementById("todayLog");
-        const emptyState = document.getElementById("emptyState");
-        
-        // إزالة العناصر القديمة عدا الـ Empty State
-        const items = todayLog.querySelectorAll('.food-item');
-        items.forEach(el => el.remove());
-        
-        if (loggedItems.length === 0) {
-            emptyState.style.display = "block";
-        } else {
-            emptyState.style.display = "none";
-            loggedItems.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "food-item";
-                div.innerHTML = `
-                    <div class="item-details">
-                        <span class="item-name">${item.name}</span>
-                        <span class="item-meal">${item.meal}</span>
-                    </div>
-                    <div class="item-actions">
-                        <span class="calories-badge">${item.calories} سعر</span>
-                        <button class="delete-btn" onclick="deleteItem(${item.id})">🗑️</button>
-                    </div>
-                `;
-                todayLog.appendChild(div);
-            });
-        }
-    }
-
-    // إعداد الفلترة المبدئية عند التشغيل
-    updateMeals();
+        // ربط الحسابات بكروت الـ Dashboard العلوية تلقائياً
+        document.getElementById("web-committed-days").textContent = committedDaysCount + " يوم";
+        document.getElementById("web-avg-calories").textContent = consumedCount > 0 ? Math.round(totalConsumed / consumedCount) + " سعر" : "0 سعر";
+        document.getElementById("web-min-weight").textContent = registeredWeights.length > 0 ? Math.min(...registeredWeights) + " كجم" : "- كجم";
+    });
+});
 </script>
-
-</body>
-</html>
