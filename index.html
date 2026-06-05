@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dietit - خطة التخسيس الذكية</title>
+    <title>Dietit - نظام الوجبات الذكي</title>
     <style>
+        :root {
+            --primary: #2ecc71;
+            --primary-dark: #27ae60;
+            --bg-color: #f5f7fb;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,128 +22,188 @@
         }
 
         body {
-            background-color: #f4f7f6;
-            color: #333;
-            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 15px;
+            font-size: 15px;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         header {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 25px 15px;
+            border-radius: 16px;
             text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.15);
         }
 
-        header h1 { font-size: 32px; margin-bottom: 10px; }
+        header h1 { font-size: 28px; margin-bottom: 5px; font-weight: 700; }
+        header p { font-size: 14px; opacity: 0.9; }
 
         .grid-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
         }
 
-        @media (max-width: 850px) {
+        @media (max-width: 800px) {
             .grid-layout { grid-template-columns: 1fr; }
         }
 
         .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f5;
         }
 
         .card h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 10px;
-            font-size: 22px;
+            color: var(--text-main);
+            margin-bottom: 18px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
         }
 
         select, input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-            background-color: #fafafa;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 15px;
+            background-color: #fff;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--primary);
         }
 
         button {
             width: 100%;
-            background-color: #2ecc71;
+            background-color: var(--primary);
             color: white;
             border: none;
             padding: 14px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
-        }
-
-        button:hover { background-color: #27ae60; }
-
-        .progress-box {
-            display: flex;
-            justify-content: space-around;
-            background: #e8f8f0;
-            padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
-            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        .progress-box .num {
-            font-size: 26px;
-            font-weight: bold;
-            color: #27ae60;
-        }
+        button:hover { background-color: var(--primary-dark); }
+        button:active { transform: scale(0.99); }
 
-        .food-list {
+        /* شريط التقدم والسعرات */
+        .progress-container {
             margin-top: 20px;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #eee;
+            background: #edf2f7;
             border-radius: 8px;
-            padding: 10px;
+            height: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary);
+            transition: width 0.4s ease, background-color 0.3s;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px dashed #e2e8f0;
+        }
+
+        .metric-box { text-align: center; flex: 1; }
+        .metric-box:not(:last-child) { border-left: 1px solid #e2e8f0; }
+        .metric-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+        .metric-num { font-size: 20px; font-weight: bold; color: var(--text-main); }
+
+        /* سجل الوجبات المأكولة */
+        .food-list {
+            margin-top: 15px;
+            max-height: 280px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 5px;
+            background: #fafbfc;
         }
 
         .food-item {
             display: flex;
             justify-content: space-between;
-            padding: 8px;
-            border-bottom: 1px solid #f1f1f1;
-            font-size: 15px;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            border: 1px solid #edf2f7;
+            font-size: 14px;
         }
 
-        .badge {
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 12px;
+        .item-details { display: flex; flex-direction: column; }
+        .item-name { font-weight: 500; }
+        .item-meal { font-size: 11px; color: var(--text-muted); }
+
+        .item-actions { display: flex; align-items: center; gap: 8px; }
+        .calories-badge {
+            background-color: #e2f8eb;
+            color: var(--primary-dark);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 5px;
+            width: auto;
+            margin: 0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 30px 10px;
+            font-style: italic;
         }
     </style>
 </head>
@@ -142,17 +211,17 @@
 
 <div class="container">
     <header>
-        <h1>Dietit - تطبيق إدارة خطة التخسيس</h1>
-        <p>نظام ذكي متكامل مبني على ملف خطة تخسيس V.1.1</p>
+        <h1>Dietit</h1>
+        <p>مساعدك الذكي لتتبع وجباتك وسعراتك اليومية المأخوذة من خطتك الخاصة</p>
     </header>
 
     <div class="grid-layout">
-        <!-- قسم حاسبة الوجبات والسعرات الحالية -->
+        <!-- الحاسبة واختيار الطعام -->
         <div class="card">
-            <h2>🛒 اختيار وإضافة الوجبات (calculator)</h2>
+            <h2>🍽️ اختيار وحساب الوجبة (calculator)</h2>
             
             <div class="form-group">
-                <label>اختر نوع النظام الغذائي:</label>
+                <label>نوع النظام الغذائي:</label>
                 <select id="dietType" onchange="updateMeals()">
                     <option value="تخسيس/ تثبيت">تخسيس/ تثبيت</option>
                     <option value="زيادة الوزن">زيادة الوزن</option>
@@ -160,75 +229,135 @@
             </div>
 
             <div class="form-group">
-                <label>اختر الوجبة:</label>
+                <label>الوجبة المستهدفة:</label>
                 <select id="mealType" onchange="updateFoods()">
-                    <!-- يتم تعبئته ديناميكياً -->
+                    <!-- يتغير تلقائياً -->
                 </select>
             </div>
 
             <div class="form-group">
-                <label>اختر الأكلة المتاحة:</label>
+                <label>الصنف أو الأكلة المتاحة:</label>
                 <select id="foodSelect">
-                    <!-- يتم تعبئته ديناميكياً -->
+                    <!-- يتغير تلقائياً -->
                 </select>
             </div>
 
-            <button onclick="addFood()">إضافة الوجبة المستهلكة الي اليوم</button>
+            <button onclick="addFood()">إضافة الوجبة الحالية</button>
 
-            <div class="progress-box">
-                <div>
-                    <div>المستهلك اليوم</div>
-                    <div class="num" id="consumedCalories">0</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="metrics">
+                <div class="metric-box">
+                    <div class="metric-label">المستهلك اليوم</div>
+                    <div class="metric-num" id="consumedCalories">0</div>
                 </div>
-                <div>
-                    <div>المستهدف اليومي ($Target$)</div>
-                    <div class="num" id="targetCalories">1650</div>
+                <div class="metric-box">
+                    <div class="metric-label">المستهدف ($Target$)</div>
+                    <div class="metric-num" id="targetCalories">1650</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-label">المتبقي</div>
+                    <div class="metric-num" id="remainingCalories">1650</div>
                 </div>
             </div>
         </div>
 
-        <!-- قسم لوحة المتابعة والتقدم اليومي -->
+        <!-- سجل التقدم اليومي -->
         <div class="card">
-            <h2>📈 لوحة المتابعة والتقدم (التقدم)</h2>
+            <h2>📈 لوحة التقدم والمتابعة اليومية</h2>
+            
             <div class="form-group">
-                <label>تعديل السعرات المستهدفة لليوم ($Target$):</label>
-                <input type="number" id="targetInput" value="1650" onchange="updateTarget()">
+                <label>تحديد هدف السعرات اليومي ($Target$):</label>
+                <input type="number" id="targetInput" value="1650" oninput="updateTarget()">
             </div>
             
-            <div style="font-weight: bold; margin-bottom: 10px; color: #2c3e50;">الوجبات التي تم تناولها اليوم:</div>
+            <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">قائمة الأطعمة المتناولة اليوم:</div>
             <div class="food-list" id="todayLog">
-                <!-- الوجبات المضافة ستظهر هنا -->
+                <div class="empty-state" id="emptyState">لم تقم بإضافة أي وجبات اليوم بعد.</div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // قاعدة البيانات المستخرجة مباشرة من شيت Data في ملف خطة تخسيس V.1.1.xlsx
+    // قاعدة البيانات المتكاملة والمستخرجة من شيت Data بملف خطة تخسيس V.1.1.xlsx
     const foodDatabase = [
-        { diet: "تخسيس/ تثبيت", meal: "غداء", name: "كوب مكرونة بالبروتين", calories: 235 },
-        { diet: "تخسيس/ تثبيت", meal: "غداء/ سناك", name: "5 حبات ورق عنب", calories: 205 },
-        { diet: "تخسيس/ تثبيت", meal: "سناك", name: "كوب أرز بلبن", calories: 200 },
-        { diet: "تخسيس/ تثبيت", meal: "غداء", name: "نصف رغيف بلدي بروتين", calories: 180 },
-        { diet: "تخسيس/ تثبيت", meal: "فطار/ عشاء", name: "4 إلى 5 ملاعق فول مدمس (بالزيت)", calories: 180 },
-        { diet: "تخسيس/ تثبيت", meal: "فطار/ عشاء", name: "نصف رغيف بلدي بالجبن القريش او الفيتا", calories: 180 },
-        { diet: "تخسيس/ تثبيت", meal: "غداء", name: "كوب شوربة عدس", calories: 175 },
-        { diet: "تخسيس/ تثبيت", meal: "سناك", name: "3 أكواب فشار بالزبدة", calories: 170 },
-        { diet: "تخسيس/ تثبيت", meal: "سناك", name: "نصف كوب بطاطا بالقشطة المشوية", calories: 170 },
-        { diet: "زيادة الوزن", meal: "سناك", name: "قطعة كنافة بالجبنة", calories: 225 },
-        { diet: "زيادة الوزن", meal: "سناك", name: "قطعتين قطايف بالجبنة", calories: 225 },
-        { diet: "زيادة الوزن", meal: "سناك", name: "قطعة بسبوسة", calories: 205 },
-        { diet: "زيادة الوزن", meal: "غداء/فطار/عشاء", name: "بيتزا صغيرة بالجبن أو بروتين", calories: 195 }
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "كوب مكرونة بالبروتين", "calories": 235},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "5 حبات ورق عنب", "calories": 205},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "كوب أرز بلبن", "calories": 205},
+        {"diet": "تخسيس/ تثبيت", "meal": "سناك", "name": "كوب أرز بلبن", "calories": 200},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "نصف رغيف بلدي بروتين", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "4 إلى 5 ملاعق فول مدمس (بالزيت)", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "نصف رغيف بلدي بالجبن القريش او الفيتا", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "شريحة توست بشريحة جبن سايحة", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "كوب مسقعة خفيفة (ني في ني أو باذنجان مشوي)", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "3 ملاعق مسقعة", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "4 - 5 ملاعق عجة فرن", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "2-3 ملاعق عجة مقلية", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "نصف رغيف فينو بالجبن الفيتا", "calories": 180},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "كوب شوربة عدس", "calories": 175},
+        {"diet": "تخسيس/ تثبيت", "meal": "سناك", "name": "نصف كوب أرز بلبن سكر معتدل", "calories": 170},
+        {"diet": "تخسيس/ تثبيت", "meal": "سناك", "name": "نصف كوب بطاطا بالقشطة المشوية", "calories": 170},
+        {"diet": "تخسيس/ تثبيت", "meal": "سناك", "name": "3 أكواب فشار بالزبدة", "calories": 170},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "محشي باذنجان (قطعة 1)", "calories": 165},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "رغيف بلدي صغير", "calories": 160},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "نصف كوب أرز معمر لايت وقطعة بروتين", "calories": 155},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "نصف كوب كبسة وقطعة بروتين", "calories": 155},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعة كبيبة أرز", "calories": 155},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعة ستربس متوسطة", "calories": 155},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعتين ستربس اير فراير متوسطة", "calories": 155},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "نصف قطعة بانية", "calories": 155},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعة بانيه اير فراير", "calories": 155},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "حبتان طعمية", "calories": 147},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "حبة بطاطس متوسطة مخبوزة في الفرن بمسحة زيت", "calories": 147},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "نصف كوب بطاطس مهروسة بمسحة زيت", "calories": 147},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار", "name": "نصف كوب كبير سلطة بابا غنوج", "calories": 147},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "أرز مبهر 5 ملاعق", "calories": 147},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "4 ملاعق مكرونة بالصلصة الخفيفة", "calories": 147},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "كوب طبيخ بالخضراوات و قطعة بروتين", "calories": 140},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ عشاء", "name": "شريحة توست بمسحة زبدة محمص", "calories": 125},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ عشاء", "name": "نصف كوب بطاطس مسلوقة بنصف معلقة زبدة", "calories": 125},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ عشاء", "name": "3 ملاعق مكرونة بالزبدة والجبنة الرومي", "calories": 125},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ عشاء", "name": "3 ملاعق أرز أبيض بالسمن", "calories": 125},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "حجم قبضة اليد ثمار فاكهة", "calories": 80},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "تمرة رطب واحدة", "calories": 80},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "كوب عصير بدون سكر", "calories": 80},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "كوب سموزي بدون سكر", "calories": 80},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "خمس ملاعق صغيرة سكر", "calories": 80},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "معلقة كبيرة من العسل", "calories": 80},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ سناك", "name": "3 ملاعق كبيرة زبادي", "calories": 80},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء", "name": "نصف كوب بروتين مع طماطم", "calories": 75},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ عشاء", "name": "نصف كوب بابا غنوج (بنقطة زيت)", "calories": 70},
+        {"diet": "تخسيس/ تثبيت", "meal": "غداء/ سناك", "name": "قطعة بروتين مشوي", "calories": 37},
+        {"diet": "تخسيس/ تثبيت", "meal": "فطار/ غداء/ عشاء", "name": "نصف كوب سلطة خضراء", "calories": 25},
+        
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قطعة كنافة بالجبنة", "calories": 225},
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قطعتين قطايف بالجبنة", "calories": 225},
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قطعة بسبوسة", "calories": 205},
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "فطير بلدي صغير (حجم الكف)", "calories": 205},
+        {"diet": "زيادة الوزن", "meal": "غداء/فطار/عشاء", "name": "1/2 رغيف صغير بروتين محمص بالزيت", "calories": 195},
+        {"diet": "زيادة الوزن", "meal": "غداء/فطار/عشاء", "name": "بيتزا صغيرة بالجبن أو بروتين", "calories": 195},
+        {"diet": "زيادة الوزن", "meal": "غداء/فطار/عشاء", "name": "فطيرة جبنة صغيرة", "calories": 195},
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قطايف بالجوز حبة واحدة متوسطة", "calories": 165},
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "قرص فلاحي بالسمسم", "calories": 165},
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "حبة بلح شام", "calories": 165},
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "حبتان جلاش", "calories": 165},
+        {"diet": "زيادة الوزن", "meal": "سناك", "name": "نصف كوب مهلبية", "calories": 160},
+        {"diet": "زيادة الوزن", "meal": "غداء/ سناك", "name": "قطعة معمول بالتمر", "calories": 125},
+        {"diet": "زيادة الوزن", "meal": "غداء/ سناك", "name": "حبة سمبوسة بروتين", "calories": 125},
+        {"diet": "زيادة الوزن", "meal": "غداء/ سناك", "name": "حبة سمبوسة جبن", "calories": 125}
     ];
 
     let totalConsumed = 0;
     let currentTarget = 1650;
+    let loggedItems = [];
 
     function updateMeals() {
         const dietType = document.getElementById("dietType").value;
         const mealSelect = document.getElementById("mealType");
         
-        // الحصول على الوجبات الفريدة المتاحة لهذا النظام
         const meals = [...new Set(foodDatabase.filter(f => f.diet === dietType).map(f => f.meal))];
         
         mealSelect.innerHTML = "";
@@ -249,9 +378,11 @@
         const foods = foodDatabase.filter(f => f.diet === dietType && f.meal === mealType);
         
         foodSelect.innerHTML = "";
-        foods.forEach(food => {
+        foods.forEach((food, index) => {
             let opt = document.createElement("option");
             opt.value = food.calories;
+            opt.dataset.name = food.name;
+            opt.dataset.meal = food.meal;
             opt.innerText = `${food.name} (${food.calories} سعر)`;
             foodSelect.appendChild(opt);
         });
@@ -259,28 +390,88 @@
 
     function addFood() {
         const foodSelect = document.getElementById("foodSelect");
-        if(!foodSelect.value) return;
+        if (!foodSelect.value) return;
         
         const calories = parseInt(foodSelect.value);
-        const name = foodSelect.options[foodSelect.selectedIndex].text;
+        const selectedOption = foodSelect.options[foodSelect.selectedIndex];
+        const name = selectedOption.dataset.name;
+        const meal = selectedOption.dataset.meal;
         
-        totalConsumed += calories;
-        document.getElementById("consumedCalories").innerText = totalConsumed;
+        const itemId = Date.now();
+        loggedItems.push({ id: itemId, name: name, meal: meal, calories: calories });
         
-        // إضافة الوجبة لجدول المتابعة اليومي
-        const todayLog = document.getElementById("todayLog");
-        const item = document.createElement("div");
-        item.className = "food-item";
-        item.innerHTML = `<span>${name}</span> <span class="badge">+ ${calories} سعر</span>`;
-        todayLog.appendChild(item);
+        renderProgress();
+    }
+
+    function deleteItem(id) {
+        loggedItems = loggedItems.filter(item => item.id !== id);
+        renderProgress();
     }
 
     function updateTarget() {
-        currentTarget = document.getElementById("targetInput").value;
-        document.getElementById("targetCalories").innerText = currentTarget;
+        const inputVal = document.getElementById("targetInput").value;
+        currentTarget = inputVal > 0 ? parseInt(inputVal) : 1650;
+        renderProgress();
     }
 
-    // تشغيل الفلترة المبدئية عند فتح الموقع
+    function renderProgress() {
+        // حساب إجمالي المستهلك
+        totalConsumed = loggedItems.reduce((sum, item) => sum + item.calories, 0);
+        
+        // حساب المتبقي
+        let remaining = currentTarget - totalConsumed;
+        
+        // تحديث النصوص في الواجهة
+        document.getElementById("consumedCalories").innerText = totalConsumed;
+        document.getElementById("targetCalories").innerText = currentTarget;
+        document.getElementById("remainingCalories").innerText = remaining;
+        
+        // تحديث شريط التقدم المرئي
+        const progressBar = document.getElementById("progressBar");
+        let percentage = (totalConsumed / currentTarget) * 100;
+        if (percentage > 100) percentage = 100;
+        progressBar.style.width = `${percentage}%`;
+        
+        // التحكم بلون الشريط بناءً على الاستهلاك
+        if (totalConsumed > currentTarget) {
+            progressBar.style.backgroundColor = "#e74c3c"; // أحمر لتخطي الهدف
+        } else if (totalConsumed >= currentTarget * 0.85) {
+            progressBar.style.backgroundColor = "#f39c12"; // برتقالي عند الاقتراب
+        } else {
+            progressBar.style.backgroundColor = "#2ecc71"; // أخضر في النطاق الآمن
+        }
+        
+        // تحديث قائمة الوجبات في شاشة التقدم
+        const todayLog = document.getElementById("todayLog");
+        const emptyState = document.getElementById("emptyState");
+        
+        // إزالة العناصر القديمة عدا الـ Empty State
+        const items = todayLog.querySelectorAll('.food-item');
+        items.forEach(el => el.remove());
+        
+        if (loggedItems.length === 0) {
+            emptyState.style.display = "block";
+        } else {
+            emptyState.style.display = "none";
+            loggedItems.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "food-item";
+                div.innerHTML = `
+                    <div class="item-details">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-meal">${item.meal}</span>
+                    </div>
+                    <div class="item-actions">
+                        <span class="calories-badge">${item.calories} سعر</span>
+                        <button class="delete-btn" onclick="deleteItem(${item.id})">🗑️</button>
+                    </div>
+                `;
+                todayLog.appendChild(div);
+            });
+        }
+    }
+
+    // إعداد الفلترة المبدئية عند التشغيل
     updateMeals();
 </script>
 
