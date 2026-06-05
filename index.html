@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>لوحة المتابعة الغذائية الذكية</title>
+<title>لوحة المتابعة الغذائية والحاسبة الذكية</title>
 <style>
     * { box-sizing: border-box; }
     body { background-color: #f5f7fa; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -18,15 +18,16 @@
     .nav-btn.ideal { background-color: #9b59b6; }
     .nav-btn.tdee { background-color: #2ecc71; }
 
-    /* حاسبة السعرات اليومية التفاعلية */
+    /* حاسبة الاختيارات المنسدلة التفاعلية */
     .calculator-box { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); margin-bottom: 20px; border: 1px solid #3498db; }
     .calculator-box h2 { margin: 0 0 12px 0; font-size: 16px; color: #2980b9; text-align: center; }
-    .calc-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #eee; }
-    .calc-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .calc-label { font-size: 13px; font-weight: bold; color: #34495e; }
-    .calc-input { width: 90px; padding: 6px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 13px; }
-    .total-box { background: #ecf0f1; padding: 10px; border-radius: 6px; text-align: center; margin-top: 10px; font-weight: bold; font-size: 15px; color: #2c3e50; }
-    .total-box span { color: #e74c3c; font-size: 18px; }
+    .calc-row { display: flex; flex-direction: column; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #eee; }
+    .calc-row:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .calc-label { font-size: 13px; font-weight: bold; color: #34495e; margin-bottom: 6px; }
+    .calc-select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; background-color: #fff; direction: rtl; }
+    .sub-select-container { margin-top: 6px; }
+    .total-box { background: #ecf0f1; padding: 12px; border-radius: 6px; text-align: center; margin-top: 15px; font-weight: bold; font-size: 15px; color: #2c3e50; }
+    .total-box span { color: #e74c3c; font-size: 20px; }
 
     .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
     .dash-card { background: #fff; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); text-align: center; border-bottom: 3.5px solid #3498db; }
@@ -59,8 +60,8 @@
 
 <div class="diet-container">
     <div class="diet-header">
-        <h1>لوحة المتابعة وجداول البدائل المحدثة</h1>
-        <p>دليلك لحمية غذائية فعالة</p>
+        <h1>لوحة المتابعة وحاسبة الخيارات الذكية</h1>
+        <p>اختر وجباتك من القوائم ليتم حساب السعرات تلقائياً</p>
     </div>
 
     <div class="btn-container">
@@ -68,27 +69,75 @@
         <a href="https://www.calculator.net/tdee-calculator.html?cage=25&csex=m&cheightfeet=5&cheightinch=10&cpound=165&cheightmeter=180&ckg=65&cactivity=1.465&cmop=0&coutunit=c&cformula=m&cfatpct=20&printit=0&ctype=metric" target="_blank" class="nav-btn tdee">🧮 حساب المعدل اليومي الطبيعي (بدون حرق و بحرق) Minimum and target calories</a>
     </div>
 
-    <!-- حاسبة حساب السعرات اليومية المباشرة (Total Calories Today) -->
+    <!-- حاسبة الاختيارات التفاعلية المبنية على الجداول -->
     <div class="calculator-box">
-        <h2>🔢 حاسبة السعرات اليومية المباشرة</h2>
+        <h2>🔢 حاسبة السعرات اليومية بالاختيار المباشر</h2>
+        
+        <!-- فطور -->
         <div class="calc-row">
-            <div class="calc-label">🍳 سعرات وجبة الفطور:</div>
-            <input type="number" id="calc-breakfast" class="calc-input" inputmode="numeric" placeholder="0" value="0">
+            <div class="calc-label">🍳 وجبة الفطور:</div>
+            <select id="select-breakfast" class="calc-select">
+                <option value="0">-- اختر من خيارات الفطور --</option>
+                <option value="160">نشويات الفطور (رغيف سن، 2 توست بني، نصف بلدي...) - 160 سعر</option>
+                <option value="147.5">بروتين الفطور (بيضتان، تونة لايت، جبن قريش...) - 147.5 سعر</option>
+                <option value="180">فول / ميكس (4-5 ملاعق فول بزيت، نصف بلدي بجبن...) - 180 سعر</option>
+                <option value="25">خضروات الفطور (طماطم، خيار، خس، جرجير...) - 25 سعر</option>
+                <option value="70">سلطات مطبوخة (سلطة بزيت زيتون، خضار سوتيه...) - 70 سعر</option>
+            </select>
         </div>
+
+        <!-- غداء -->
         <div class="calc-row">
-            <div class="calc-label">🍲 سعرات وجبة الغداء:</div>
-            <input type="number" id="calc-lunch" class="calc-input" inputmode="numeric" placeholder="0" value="0">
+            <div class="calc-label">🍲 وجبة الغداء:</div>
+            <select id="select-lunch" class="calc-select">
+                <option value="0">-- اختر من خيارات الغداء --</option>
+                <option value="235">مكرونة بالبروتين (مكرونة مسلوقة + لحم مفروم بدون دهون) - 235 سعر</option>
+                <option value="180">نصف رغيف بلدي + (كفتة مشوية أو كبدة مشوية) - 180 سعر</option>
+                <option value="175">شوربة عدس بدون شعرية أو دهون + ربع رغيف محمص - 175 سعر</option>
+                <option value="165">نشويات الغداء (8 ملاعق بسمتي، 6 مصري، فريك، برغل) - 165 سعر</option>
+                <option value="155">بروتين الغداء أساسي (صدر دجاج، 2 سمك بلطي، تونة لايت) - 155 سعر</option>
+                <option value="147.5">بروتين الغداء بديل (ورك دجاج، 2 لحم ملبس، 3 كفتة) - 147.5 سعر</option>
+                <option value="140">6 ملاعق أرز مصري + 4 ملاعق خضار بصلصة بدون دهون - 140 سعر</option>
+                <option value="75">بروتين حجم صغير (قطعة لحم صغيرة، نصف صدر دجاج) - 75 سعر</option>
+                <option value="205">يوم فري غداء (5 ورق عنب، بسبوسة، أرز بلبن، بليلة) - 205 سعر</option>
+                <option value="155">حلو دايت غداء (بانيه ايرفراير، كيكة اسفنجية دايت) - 155 سعر</option>
+                <option value="37.5">بروتين ربع كمية (نصف قطعة لحم، ربع صدر دجاج) - 37.5 سعر</option>
+            </select>
         </div>
+
+        <!-- عشاء -->
         <div class="calc-row">
-            <div class="calc-label">🌙 سعرات وجبة العشاء:</div>
-            <input type="number" id="calc-dinner" class="calc-input" inputmode="numeric" placeholder="0" value="0">
+            <div class="calc-label">🌙 وجبة العشاء (تخسيس وتثبيت):</div>
+            <select id="select-dinner" class="calc-select">
+                <option value="0">-- اختر من خيارات العشاء --</option>
+                <option value="125">توست بمسحة زبدة / نصف كوب بطاطس مسلوقة بزبدة / 3 ملاعق مكرونة أو أرز - 125 سعر</option>
+            </select>
         </div>
+
+        <!-- سناك التخسيس أو الفري -->
         <div class="calc-row">
-            <div class="calc-label">🍎 سعرات السناك / الإضافات:</div>
-            <input type="number" id="calc-snack" class="calc-input" inputmode="numeric" placeholder="0" value="0">
+            <div class="calc-label">🍎 سناك التخسيس / اليوم الـ Free:</div>
+            <select id="select-snack-diet" class="calc-select">
+                <option value="0">-- بدون سناك دايت --</option>
+                <option value="200">سناك فري دسم (أرز بلبن، بسبوسة، قطايف مقلية، بليلة بالسكر) - 200 سعر</option>
+                <option value="170">سناك فري متوسط (زبادي خلاط بفاكهة وعسل، بطاطا بقشطة، كيك بيتي) - 170 سعر</option>
+                <option value="80">فاكهة / إضافات (تفاح، موز، برتقال، 3 تمرات، ملعقة عسل...) - 80 سعر</option>
+            </select>
         </div>
+
+        <!-- سناكات زيادة الوزن الثلاثة المحدثة -->
+        <div class="calc-row">
+            <div class="calc-label">🥞 سناكات نظام زيادة الوزن (في حال تفعيلها):</div>
+            <select id="select-snack-gain" class="calc-select">
+                <option value="0">-- بدون سناك زيادة وزن --</option>
+                <option value="225">[سناك ١]: حلويات دسمة (كنافة، أم علي بقشطة، سينابون، ميلك شيك) - 225 سعر</option>
+                <option value="165">[سناك ٢]: مشروبات ومكسرات (عصير قصب، مانجو، كاكاو دسم، 50ج مكسرات) - 165 سعر</option>
+                <option value="125">[سناك ٣]: سندوتشات خفيفة (حلاوة بالقشطة، مربى بالزبدة، موز باللبن وعسل) - 125 rectangular</option>
+            </select>
+        </div>
+
         <div class="total-box">
-            مجموع السعرات المتناولة اليوم: <span id="calc-total">0</span> سعر
+            مجموع سعرات الاختيارات الحالية: <span id="calc-total">0</span> سعر
         </div>
     </div>
 
@@ -213,25 +262,26 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // تشغيل وإدارة حاسبة السعرات الفورية المباشرة لليوم الحالي
-    const calcBreakfast = document.getElementById("calc-breakfast");
-    const calcLunch = document.getElementById("calc-lunch");
-    const calcDinner = document.getElementById("calc-dinner");
-    const calcSnack = document.getElementById("calc-snack");
+    // تشغيل وإدارة حاسبة السعرات الذكية المبنية على الاختيارات
+    const selectBreakfast = document.getElementById("select-breakfast");
+    const selectLunch = document.getElementById("select-lunch");
+    const selectDinner = document.getElementById("select-dinner");
+    const selectSnackDiet = document.getElementById("select-snack-diet");
+    const selectSnackGain = document.getElementById("select-snack-gain");
     const calcTotal = document.getElementById("calc-total");
 
-    function calculateTodayTotal() {
-        let b = parseFloat(calcBreakfast.value) || 0;
-        let l = parseFloat(calcLunch.value) || 0;
-        let d = parseFloat(calcDinner.value) || 0;
-        let s = parseFloat(calcSnack.value) || 0;
-        calcTotal.textContent = b + l + d + s;
+    function calculateDropdownTotal() {
+        let b = parseFloat(selectBreakfast.value) || 0;
+        let l = parseFloat(selectLunch.value) || 0;
+        let d = parseFloat(selectDinner.value) || 0;
+        let sd = parseFloat(selectSnackDiet.value) || 0;
+        let sg = parseFloat(selectSnackGain.value) || 0;
+        
+        calcTotal.textContent = b + l + d + sd + sg;
     }
 
-    [calcBreakfast, calcLunch, calcDinner, calcSnack].forEach(input => {
-        input.addEventListener("input", calculateTodayTotal);
-        input.addEventListener("focus", function() { if(this.value === "0") this.value = ""; });
-        input.addEventListener("blur", function() { if(this.value === "") this.value = "0"; });
+    [selectBreakfast, selectLunch, selectDinner, selectSnackDiet, selectSnackGain].forEach(select => {
+        select.addEventListener("change", calculateDropdownTotal);
     });
 
     // إنشاء جدول المتابعة المقارن الـ 30 يوماً
@@ -248,7 +298,7 @@ document.addEventListener("DOMContentLoaded", function() {
         tableBody.appendChild(tr);
     }
 
-    // إدارة الإدخالات التفاعلية للرسم البياني ولوحة المتابعة
+    // إدارة الإدخالات التفاعلية للرسم البياني ولوحة المتابعة للجدول الشهري
     tableBody.addEventListener("input", function() {
         let totalConsumed = 0;
         let totalTarget = 0;
