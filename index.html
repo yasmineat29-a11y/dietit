@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>لوحة المتابعة الغذائية الذكية - اختيار متعدد مع تحديد الكمية</title>
+<title>Dietit - دليلك لحمية غذائية فعالة</title>
 <style>
     * { box-sizing: border-box; }
     body { background-color: #f0f4f8; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     .diet-container { direction: rtl; padding: 12px; max-width: 100%; margin: 0 auto; color: #2c3e50; }
     
-    /* باليت الألوان المستوحاة من الطبيعة والأفق الصافي */
+    /* الهوية البصرية الجديدة Dietit */
     .diet-header { text-align: center; margin-bottom: 20px; border-bottom: 3px solid #5ba4e5; padding-bottom: 12px; }
-    .diet-header h1 { font-size: 20px; margin: 5px 0; color: #1a365d; }
-    .diet-header p { font-size: 13px; margin: 0; color: #5a738e; }
+    .diet-header h1 { font-size: 28px; margin: 5px 0; color: #1a365d; font-family: 'Century Gothic', sans-serif; letter-spacing: 1px; }
+    .diet-header p { font-size: 14px; margin: 0; color: #5a738e; font-weight: bold; }
     
-    .info-note { background-color: #e3f2fd; border-right: 5px solid #2196f3; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-size: 13px; font-weight: bold; color: #1e88e5; line-height: 1.5; }
+    .info-note { background-color: #e3f2fd; border-right: 5px solid #2196f3; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-size: 13px; font-weight: bold; color: #1e88e5; text-align: center; }
 
     .btn-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; width: 100%; }
     .nav-btn { color: white; padding: 14px 16px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; width: 100%; font-size: 13px; display: block; line-height: 1.4; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
@@ -29,7 +29,7 @@
     .calc-row:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .calc-label { font-size: 14px; font-weight: bold; color: #1a365d; margin-bottom: 8px; border-right: 3px solid #d35400; padding-right: 6px; }
     
-    /* تصميم شبكة الاختيارات المتعددة وبطاقات الطعام المحدثة */
+    /* تصميم شبكة الاختيارات المتعددة وبطاقات الطعام */
     .multi-select-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 5px; }
     @media(min-width: 600px) { .multi-select-grid { grid-template-columns: 1fr 1fr; } }
     
@@ -90,12 +90,12 @@
 
 <div class="diet-container">
     <div class="diet-header">
-        <h1>لوحة المتابعة الغذائية الذكية وحاسبة الكميات المضاعفة</h1>
-        <p>حدد الأكلات المفضلة وتحكم بالكمية (✕) ليتم حساب السعرات التراكمية بدقة</p>
+        <h1>Dietit</h1>
+        <p>دليلك لحمية غذائية فعالة</p>
     </div>
 
     <div class="info-note">
-        ✨ ميزة الكميات المتعددة: عند تحديد أي أكلة بوضع علامة صح، ستظهر لك خانة الكمية التلقائية `✕ 1`. يمكنك زيادتها إذا تناولت حصتين أو أكثر لتتضاعف السعرات فوراً!
+        💡 توضيح: الرمز (|) يعني "أو" (على سبيل المثال: 2 توست أو نصف رغيف بلدي).
     </div>
 
     <div class="btn-container">
@@ -103,7 +103,7 @@
         <a href="https://www.calculator.net/tdee-calculator.html?cage=25&csex=m&cheightfeet=5&cheightinch=10&cpound=165&cheightmeter=180&ckg=65&cactivity=1.465&cmop=0&coutunit=c&cformula=m&cfatpct=20&printit=0&ctype=metric" target="_blank" class="nav-btn tdee">🧮 حساب المعدل اليومي الطبيعي (TDEE Calories)</a>
     </div>
 
-    <!-- الحاسبة التفاعلية المحدثة بنظام الضرب المتعدد -->
+    <!-- الحاسبة التفاعلية بنظام الضرب المتعدد -->
     <div class="calculator-box">
         <h2>🔢 حاسبة الاختيارات المتعددة والكميات</h2>
         
@@ -127,7 +127,7 @@
                         <div class="card-right-side">
                             <input type="checkbox" value="160" onchange="calculateMultiTotal()">
                             <div class="item-details">
-                                <span>نشويات الفطور (رغيف سن | 2 توست | نصف بلدي...)</span>
+                                <span>نشويات الفطور (رغيف سن | 2 توست | نصف بلدي)</span>
                                 <span class="item-calories">160 سعر</span>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                         <div class="card-right-side">
                             <input type="checkbox" value="147.5" onchange="calculateMultiTotal()">
                             <div class="item-details">
-                                <span>بروتين الفطور (بيضتان مسلوقتان | جبن قريش...)</span>
+                                <span>بروتين الفطور (بيضتان مسلوقتان | جبن قريش)</span>
                                 <span class="item-calories">147.5 سعر</span>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                         <div class="card-right-side">
                             <input type="checkbox" value="25" onchange="calculateMultiTotal()">
                             <div class="item-details">
-                                <span>خضروات الفطور (طماطم | خيار | خس | جرجير...)</span>
+                                <span>خضروات الفطور (طماطم | خيار | خس | جرجير)</span>
                                 <span class="item-calories">25 سعر</span>
                             </div>
                         </div>
@@ -332,9 +332,9 @@
             </div>
         </div>
 
-        <!-- المجموع النهائي المربوط بعمليات الضرب والترحيل للـ LocalStorage -->
+        <!-- المجموع النهائي المربوط بعمليات الضرب والترحيل -->
         <div class="total-box">
-            إجمالي السعرات المحددة (السعرات ✕ الكمية): <span id="calc-total">0</span> سعر
+            إجمالي السعرات المحددة: <span id="calc-total">0</span> سعر
             <button type="button" class="push-data-btn" onclick="pushTotalToMonthlyTable()">💾 ترحيل السعرات المحسوبة وحفظها في الجدول الشهري</button>
         </div>
     </div>
@@ -432,11 +432,9 @@ document.addEventListener("DOMContentLoaded", function() {
     tableBody.addEventListener("input", updateDashboardAndCharts);
 });
 
-// وظيفة التحكم الكامل بضغطات بطاقة الوجبة
 function handleCardClick(event, cardElem) {
     const checkbox = cardElem.querySelector('input[type="checkbox"]');
     
-    // إذا ضغط المستخدم داخل صندوق مدخلات الكمية لا نفعل الـ Checkbox لمنع التشويش
     if (event.target.classList.contains('qty-input') || event.target.classList.contains('quantity-wrapper')) {
         return;
     }
@@ -447,7 +445,6 @@ function handleCardClick(event, cardElem) {
     
     if (checkbox.checked) {
         cardElem.classList.add("selected");
-        // إعادة تعيين الكمية إلى 1 تلقائياً عند التفعيل الجديد
         cardElem.querySelector(".qty-input").value = 1;
     } else {
         cardElem.classList.remove("selected");
@@ -455,7 +452,6 @@ function handleCardClick(event, cardElem) {
     calculateMultiTotal();
 }
 
-// حساب المجموع الكلي الدقيق بالاعتماد على مصفوفة: [السعرات × الكمية] لكل خانة معلمة بنجاح
 function calculateMultiTotal() {
     let total = 0;
     const activeSection = document.getElementById("select-diet-type").value;
