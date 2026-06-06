@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -114,7 +114,7 @@
     </div>
 
     <div class="info-note">
-        💡 توضيح: لتثبيت النطبيق من "⋮" أعلى الشاشة إضغط على أضف إلى الشاشة الرئيسيية ثم اضغط تثبيت
+        💡 توضيح: لتثبيت التطبيق من "⋮" أعلى الشاشة إضغط على أضف إلى الشاشة الرئيسية ثم اضغط تثبيت
     </div>
 
     <div class="btn-container">
@@ -127,7 +127,7 @@
         
         <div class="calc-row" style="background-color: #edf2f7; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-bottom: 15px;">
             <div class="calc-label" style="color: #2b6cb0; font-size: 14px; border-right-color:#2b6cb0 ;">🎯 حدد خطتك الغذائية الحالية لتفعيل الأكلات:</div>
-            <select id="select-diet-type" class="calc-select" style="font-weight: bold; border-color: #2b6cb0;">
+            <select id="select-diet-type" class="calc-select" style="font-weight: bold; border-color: #2b6cb0; width: 100%; padding: 8px; border-radius: 5px;">
                 <option value="none">-- اختر نوع النظام لإظهار بطاقات الطعام --</option>
                 <option value="lose">🥗 نظام التخسيس والتثبيت</option>
                 <option value="gain">🥞 نظام زيادة الوزن</option>
@@ -139,7 +139,6 @@
         </div>
 
         <div id="section-lose-diet" class="diet-conditional-section">
-            
             <div class="calc-row">
                 <div class="calc-label">🍳 وجبة الفطور (وما يشملها من فطار/سناك أو فطار/عشاء):</div>
                 <div class="multi-select-grid">
@@ -321,7 +320,6 @@
                         <div class="card-right-side"><input type="checkbox" value="75" onchange="calculateMultiTotal()"><div class="item-details"><span>75 سعر بروتين بشكل أساسي</span><span class="item-calories">75 سعر</span></div></div>
                         <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
                     </div>
-                    
                     <div class="checkbox-card" onclick="handleCardClick(event, this)">
                         <div class="card-right-side"><input type="checkbox" value="205" onchange="calculateMultiTotal()"><div class="item-details"><span>5 حبات ورق عنب</span><span class="item-calories">205 سعر</span></div></div>
                         <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
@@ -366,7 +364,6 @@
                         <div class="card-right-side"><input type="checkbox" value="37.5" onchange="calculateMultiTotal()"><div class="item-details"><span>38 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">37.5 سعر</span></div></div>
                         <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
                     </div>
-                    
                     <div class="checkbox-card" onclick="handleCardClick(event, this)">
                         <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>شريحة توست بمسحة زبدة محمص</span><span class="item-calories">125 سعر</span></div></div>
                         <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
@@ -435,7 +432,6 @@
         </div>
 
         <div id="section-gain-diet" class="diet-conditional-section">
-            
             <div class="calc-row">
                 <div class="calc-label">🍽️ الوجبات والخيارات الأساسية لزيادة الوزن (غداء/فطار/عشاء):</div>
                 <div class="multi-select-grid">
@@ -513,7 +509,6 @@
                         <div class="card-right-side"><input type="checkbox" value="160" onchange="calculateMultiTotal()"><div class="item-details"><span>160 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">160 سعر</span></div></div>
                         <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
                     </div>
-                    
                     <div class="checkbox-card" onclick="handleCardClick(event, this)">
                         <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعة معمول بالتمر</span><span class="item-calories">125 سعر</span></div></div>
                         <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
@@ -563,8 +558,7 @@
     <div class="chart-box">
         <h3>📈 مخطط تتبع السعرات الشهري التفصيلي (30 يومًا)</h3>
         <div class="chart-scroll-wrapper">
-            <div class="bar-chart" id="monthly-bar-chart-container">
-                </div>
+            <div class="bar-chart" id="monthly-bar-chart-container"></div>
         </div>
     </div>
 
@@ -580,8 +574,7 @@
                     <th style="width: 18%;">الالتزام</th>
                 </tr>
             </thead>
-            <tbody id="monthly-table-rows">
-                </tbody>
+            <tbody id="monthly-table-rows"></tbody>
         </table>
     </div>
 </div>
@@ -610,7 +603,7 @@ document.addEventListener("DOMContentLoaded", function() {
             sectionGain.style.display = "none";
             searchBarWrapper.style.display = "block";
         } else if (this.value === "gain") {
-            // 2. منطق الـ "Gain Weight": عند اختياره يتم عرض القسمين معاً لدمج أطعمة الفئتين
+            // منطق الـ "Gain Weight": عند اختياره يتم عرض القسمين معاً لدمج أطعمة الفئتين كما طُلب في التحديث
             sectionLose.style.display = "block";
             sectionGain.style.display = "block";
             searchBarWrapper.style.display = "block";
@@ -666,7 +659,7 @@ function initMonthlyChartStructure() {
     }
 }
 
-// 1. منطق البحث والتصفية الديناميكية لبطاقات الطعام المتاحة
+// منطق البحث والتصفية الديناميكية لبطاقات الطعام المتاحة
 function filterFoods() {
     const query = document.getElementById("food-search-input").value.trim().toLowerCase();
     const cards = document.querySelectorAll(".checkbox-card");
@@ -701,7 +694,7 @@ function handleCardClick(event, cardElem) {
     calculateMultiTotal();
 }
 
-// تعديل دالة الحساب لتشمل أوزان البطاقات المختارة بالإضافة إلى حقول الإدخال اليدوية
+// دالة الحساب لتشمل أوزان البطاقات المختارة بالإضافة إلى حقول الإدخال اليدوية
 function calculateMultiTotal() {
     let total = 0;
     const activeSection = document.getElementById("select-diet-type").value;
@@ -718,12 +711,12 @@ function calculateMultiTotal() {
                 total += (calories * qty);
             }
         });
-        // 4. إضافة السعرات اليدوية المدخلة في خانة التخسيس
+        // إضافة السعرات اليدوية المدخلة في خانة التخسيس
         const manualLose = parseFloat(document.getElementById("manual-calories-lose").value) || 0;
         total += manualLose;
 
     } else if (activeSection === "gain") {
-        // 2. تجميع البطاقات من كلا القسمين (التخسيس وزيادة الوزن معاً) تماشياً مع شرط الـ Gain Weight الجديد
+        // تجميع البطاقات من كلا القسمين (التخسيس وزيادة الوزن معاً) تماشياً مع شرط الـ Gain Weight الجديد الموضح في الصورة والتحديثات
         const allCards = document.querySelectorAll("#section-lose-diet .checkbox-card, #section-gain-diet .checkbox-card");
         allCards.forEach(card => {
             const box = card.querySelector("input[type='checkbox']");
@@ -734,7 +727,7 @@ function calculateMultiTotal() {
                 total += (calories * qty);
             }
         });
-        // 4. إضافة السعرات اليدوية المدخلة في خانة زيادة الوزن
+        // إضافة السعرات اليدوية المدخلة في خانة زيادة الوزن
         const manualGain = parseFloat(document.getElementById("manual-calories-gain").value) || 0;
         total += manualGain;
     }
@@ -791,7 +784,7 @@ function pushTotalToMonthlyTable() {
     }
 }
 
-// 3. دالة التحديث الشاملة والمطورة لتعكس بيانات كل يوم في الشهر على حدة داخل المخطط البياني الموسع
+// دالة التحديث الشاملة والمطورة لتعكس بيانات كل يوم في الشهر على حدة داخل المخطط البياني الموسع
 function updateDashboardAndCharts() {
     let totalConsumed = 0;
     let totalTarget = 0;
@@ -800,7 +793,6 @@ function updateDashboardAndCharts() {
     let registeredWeights = [];
     let committedDaysCount = 0;
 
-    // تحديد الحد الأقصى الافتراضي لتمثيل الارتفاعات هندسيًا (مثال: 3000 كالوري)
     let maxCalorieScale = 2500; 
 
     const tableBody = document.getElementById("monthly-table-rows");
@@ -865,6 +857,9 @@ function updateDashboardAndCharts() {
     let avgConsumed = consumedCount > 0 ? Math.round(totalConsumed / consumedCount) : 0;
     document.getElementById("web-avg-calories").textContent = avgConsumed + " سعر";
     document.getElementById("web-min-weight").textContent = registeredWeights.length > 0 ? Math.min(...registeredWeights) + " كجم" : "- كجم";
+}
+</script>
+
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
