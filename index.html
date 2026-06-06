@@ -865,9 +865,7 @@ function updateDashboardAndCharts() {
     let avgConsumed = consumedCount > 0 ? Math.round(totalConsumed / consumedCount) : 0;
     document.getElementById("web-avg-calories").textContent = avgConsumed + " سعر";
     document.getElementById("web-min-weight").textContent = registeredWeights.length > 0 ? Math.min(...registeredWeights) + " كجم" : "- كجم";
-}
-</script>
-</script>
+<script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js');
