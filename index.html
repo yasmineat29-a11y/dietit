@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <!-- أضف هذا السطر هنا -->
     <link rel="icon" type="image/png" href="favicon.png">
 </head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- إصلاح مشكلة اختصار الهاتف واللوجو والتسمية -->
 <title>Dietit</title>
 <meta name="apple-mobile-web-app-title" content="Dietit">
 <meta name="application-name" content="Dietit">
@@ -34,750 +32,245 @@
 
     /* حاسبة الاختيارات التفاعلية الذكية */
     .calculator-box { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 3px 6px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #5ba4e5; }
-    .calculator-box h2 { margin: 0 0 12px 0; font-size: 16px; color: #1a365d; text-align: center; }
-    
-    .calc-row { display: flex; flex-direction: column; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px dashed #d0dbe5; }
-    .calc-row:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .calc-label { font-size: 14px; font-weight: bold; color: #1a365d; margin-bottom: 8px; border-right: 3px solid #d35400; padding-right: 6px; }
-    
-    /* تصميم شبكة الاختيارات المتعددة وبطاقات الطعام */
-    .multi-select-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 5px; }
-    @media(min-width: 600px) { .multi-select-grid { grid-template-columns: 1fr 1fr; } }
-    
-    .checkbox-card { display: flex; align-items: center; background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 6px; cursor: pointer; user-select: none; transition: all 0.2s; position: relative; }
-    .checkbox-card:hover { background: #f1f5f9; border-color: #cbd5e1; }
-    
-    .card-right-side { display: flex; align-items: flex-start; flex: 1; }
-    .checkbox-card input[type="checkbox"] { margin-left: 10px; margin-top: 3px; transform: scale(1.15); cursor: pointer; }
-    
-    .checkbox-card.selected { background-color: #e0f2fe; border-color: #7dd3fc; }
-    .item-details { display: flex; flex-direction: column; font-size: 12px; color: #334155; line-height: 1.4; padding-left: 5px; }
-    .item-calories { font-weight: bold; color: #d35400; font-size: 13px; margin-top: 2px; }
 
-    /* حقل تحديد الكمية (علامة الضرب ✕) */
-    .quantity-wrapper { display: flex; align-items: center; gap: 4px; background: #fff; padding: 4px 6px; border: 1px solid #cbd5e0; border-radius: 4px; visibility: hidden; opacity: 0; transition: all 0.2s; }
-    .checkbox-card.selected .quantity-wrapper { visibility: visible; opacity: 1; }
-    .quantity-label { font-size: 11px; font-weight: bold; color: #7f8c8d; }
-    .qty-input { width: 42px; text-align: center; border: 1px solid #cbd5e0; border-radius: 3px; font-size: 13px; font-weight: bold; color: #1a365d; padding: 2px 0; }
-
-    .diet-conditional-section { display: none; }
+    /* New Features Styling */
+    .search-box { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; direction: rtl; }
+    .meal-section { background: #fdfdfd; padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
+    .meal-title { font-weight: bold; margin-bottom: 10px; color: #2c3e50; font-size: 16px; }
+    .food-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 14px; }
+    .food-item input { margin-left: 8px; }
+    .manual-cal-container { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #e2e8f0; }
+    .manual-cal-input { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; }
+    .goal-select-container { margin-bottom: 15px; }
+    .goal-select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #5ba4e5; font-size: 14px; font-weight: bold; }
     
-    .total-box { background: #e6f2ff; padding: 15px; border-radius: 6px; text-align: center; margin-top: 15px; font-weight: bold; font-size: 15px; color: #1a365d; border: 1px dashed #5ba4e5; }
-    .total-box span { color: #d35400; font-size: 24px; display: inline-block; margin: 0 5px; }
-    
-    .push-data-btn { background-color: #27ae60; color: white; border: none; padding: 12px 15px; border-radius: 6px; font-weight: bold; margin-top: 12px; width: 100%; cursor: pointer; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s; }
-    .push-data-btn:hover { background-color: #219653; }
-
-    /* لوحة المعلومات السريعة والرسوم البيانية */
-    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
-    .dash-card { background: #fff; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align: center; border-bottom: 3.5px solid #5ba4e5; }
-    .dash-card.success { border-bottom-color: #2ecc71; }
-    .dash-card.warning { border-bottom-color: #d35400; }
-    .dash-title { color: #7f8c8d; font-size: 11px; font-weight: bold; }
-    .dash-value { font-size: 18px; font-weight: bold; margin-top: 5px; color: #1a365d; }
-    
-    .chart-box { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 20px; text-align: center; }
-    .chart-box h3 { margin: 0 0 10px 0; font-size: 15px; color: #1a365d; }
-    .bar-chart { display: flex; align-items: flex-end; justify-content: space-around; height: 140px; border-bottom: 2px solid #1a365d; margin: 10px auto 0 auto; max-width: 280px; }
-    .bar-container { display: flex; flex-direction: column; align-items: center; width: 50px; }
-    .bar { width: 100%; background-color: #4a90e2; border-radius: 3px 3px 0 0; transition: height 0.4s ease; height: 0px; }
-    .bar.consumed-bar { background-color: #d35400; }
-    .bar.target-bar { background-color: #2ecc71; }
-    .bar-label { font-size: 11px; margin-top: 6px; font-weight: bold; color: #555; }
-
-    /* جداول العرض والمتابعة التلقائية */
-    .table-container { background: #fff; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .section-title { margin: -12px -12px 12px -12px; color: #fff; padding: 12px; border-radius: 8px 8px 0 0; font-size: 14px; font-weight: bold; text-align: center; }
-    
-    .diet-table { width: 100%; border-collapse: collapse; text-align: right; min-width: 320px; font-size: 13px; }
-    .diet-table th { background-color: #1a365d; color: #fff; padding: 8px; border: 1px solid #d0dbe5; text-align: center; font-size: 12px; }
-    .diet-table td { padding: 9px 8px; border: 1px solid #e1e8ed; vertical-align: middle; line-height: 1.4; }
-    .diet-table tr:nth-child(even) { background-color: #f7fafc; }
-    
-    .w-input, .c-consumed, .c-target { width: 100%; max-width: 70px; text-align: center; padding: 6px 4px; border: 1px solid #b0c4de; border-radius: 4px; font-size: 13px; }
+    /* Chart Container */
+    .chart-container { margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #5ba4e5; }
+    .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 10px; direction: ltr; }
+    .day-cell { background: #f0f4f8; border: 1px solid #cbd5e1; border-radius: 4px; padding: 5px 2px; text-align: center; font-size: 11px; font-weight: bold; color: #475569; }
+    .day-cell.active { background: #2ecc71; color: white; border-color: #27ae60; }
+    .summary-text { font-size: 16px; font-weight: bold; text-align: center; margin-top: 10px; }
 </style>
-</head>
+
 <body>
 
 <div class="diet-container">
+
     <div class="diet-header">
         <h1>Dietit</h1>
-        <p>دليلك لحمية غذائية فعالة</p>
+        <p>نظامك الغذائي الذكي والتفاعلي</p>
     </div>
 
     <div class="info-note">
-        💡 توضيح: الرمز (|) يعني "أو" (على سبيل المثال: 2 توست أو نصف رغيف بلدي).
+        تابع سعراتك الحرارية اليومية والشهرية بكل سهولة واصنع خياراتك الذكية
     </div>
 
     <div class="btn-container">
-        <a href="https://www.calculator.net/ideal-weight-calculator.html?ctype=metric&cage=25&csex=m&cheightfeet=5&cheightinch=10&cheightmeter=180&printit=0" target="_blank" class="nav-btn ideal">⚖️ اعرف الوزن الهدف Healthy BMI Range</a>
-        <a href="https://www.calculator.net/tdee-calculator.html?cage=25&csex=m&cheightfeet=5&cheightinch=10&cpound=165&cheightmeter=180&ckg=65&cactivity=1.465&cmop=0&coutunit=c&cformula=m&cfatpct=20&printit=0&ctype=metric" target="_blank" class="nav-btn tdee">🧮 حساب المعدل اليومي الطبيعي (TDEE Calories)</a>
+        <button class="nav-btn ideal" onclick="alert('حساب الوزن المثالي قيد التشغيل...')">حساب الوزن المثالي</button>
+        <button class="nav-btn tdee" onclick="alert('حساب الاحتياج اليومي (TDEE) قيد التشغيل...')">حساب الاحتياج اليومي TDEE</button>
     </div>
 
-    <!-- الحاسبة التفاعلية بنظام الضرب المتعدد -->
     <div class="calculator-box">
-        <h2>🔢 حاسبة الاختيارات المتعددة والكميات</h2>
-        
-        <div class="calc-row" style="background-color: #edf2f7; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-bottom: 20px;">
-            <div class="calc-label" style="color: #2b6cb0; font-size: 14px; border-right-color:#2b6cb0 ;">🎯 حدد خطتك الغذائية الحالية لتفعيل الأكلات:</div>
-            <select id="select-diet-type" class="calc-select" style="font-weight: bold; border-color: #2b6cb0;">
-                <option value="none">-- اختر نوع النظام لإظهار بطاقات الطعام --</option>
-                <option value="lose">🥗 نظام التخسيس والتثبيت</option>
-                <option value="gain">🥞 نظام زيادة الوزن</option>
+        <div class="goal-select-container">
+            <label style="font-weight: bold; display: block; margin-bottom: 5px;">تحديد الهدف الحالي:</label>
+            <select id="goalSelect" class="goal-select" onchange="filterFoodsByGoal()">
+                <option value="lose">إنقاص الوزن / الحفاظ عليه</option>
+                <option value="gain">زيادة الوزن (عرض جميع الأطعمة)</option>
             </select>
         </div>
 
-        <!-- ================= قسم نظام التخسيس والتثبيت ================= -->
-        <div id="section-lose-diet" class="diet-conditional-section">
-            
-            <!-- وجبة الفطور والتصنيفات المشتركة معها -->
-            <div class="calc-row">
-                <div class="calc-label">🍳 وجبة الفطور (وما يشملها من فطار/سناك أو فطار/عشاء):</div>
-                <div class="multi-select-grid">
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="160" onchange="calculateMultiTotal()"><div class="item-details"><span>رغيف بلدي صغير</span><span class="item-calories">160 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+        <input type="text" id="foodSearch" class="search-box" placeholder="ابحث عن الطعام أو الوجبة هنا..." oninput="searchFoods()">
+
+        <div id="mealsContainer">
+            <div class="meal-section" data-meal="breakfast">
+                <div class="meal-title">وجبة الإفطار</div>
+                <div class="food-list">
+                    <div class="food-item" data-category="diet" data-name="بيض مسلوق">
+                        <input type="checkbox" value="78" onchange="calculateTotalCalories()"> <span>بيض مسلوق (78 سعرة)</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="160" onchange="calculateMultiTotal()"><div class="item-details"><span>160 سعر نشويات بشكل أساسي</span><span class="item-calories">160 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+                    <div class="food-item" data-category="diet" data-name="جبن قريش">
+                        <input type="checkbox" value="98" onchange="calculateTotalCalories()"> <span>جبن قريش 100ج (98 سعرة)</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="147.5" onchange="calculateMultiTotal()"><div class="item-details"><span>حبتان طعمية</span><span class="item-calories">147.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+                    <div class="food-item" data-category="bulk" data-name="شوفان بالحليب والعسل">
+                        <input type="checkbox" value="350" onchange="calculateTotalCalories()"> <span>شوفان بالحليب والعسل (350 سعرة) [زيادة وزن]</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="147.5" onchange="calculateMultiTotal()"><div class="item-details"><span>حبة بطاطس متوسطة مخبوزة في الفرن بمسحة زيت وتوابل</span><span class="item-calories">147.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+                    <div class="food-item" data-category="bulk" data-name="زبدة الفول السوداني">
+                        <input type="checkbox" value="188" onchange="calculateTotalCalories()"> <span>ملعقة زبدة فول سوداني (188 سعرة) [زيادة وزن]</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="147.5" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب بطاطس مهروسة بمسحة زيت</span><span class="item-calories">147.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="147.5" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب كبير سلطة بابا غنوج</span><span class="item-calories">147.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <!-- فطار / سناك -->
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="80" onchange="calculateMultiTotal()"><div class="item-details"><span>حجم قبضة اليد ثمار فاكهة</span><span class="item-calories">80 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="80" onchange="calculateMultiTotal()"><div class="item-details"><span>تمرة رطب واحدة</span><span class="item-calories">80 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="80" onchange="calculateMultiTotal()"><div class="item-details"><span>كوب عصير بدون سكر</span><span class="item-calories">80 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="80" onchange="calculateMultiTotal()"><div class="item-details"><span>كوب سموزي بدون سكر</span><span class="item-calories">80 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="80" onchange="calculateMultiTotal()"><div class="item-details"><span>خمس ملاعق صغيرة سكر</span><span class="item-calories">80 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="80" onchange="calculateMultiTotal()"><div class="item-details"><span>معلقة كبيرة من العسل</span><span class="item-calories">80 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="80" onchange="calculateMultiTotal()"><div class="item-details"><span>3 ملاعق كبيرة زبادي</span><span class="item-calories">80 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="80" onchange="calculateMultiTotal()"><div class="item-details"><span>80 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">80 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <!-- فطار / عشاء -->
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>4 إلى 5 ملاعق فول مدمس (بالزيت)</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف رغيف بلدي بالجبن القريش او الفيتا</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>شريحة توست بشريحة جبن سايحة</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>كوب مسقعة خفيفة (ني في ني أو باذنجان مشوي/قلاية هوائية)</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>3 ملاعق مسقعة</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>4 - 5 ملاعق عجة فرن</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>2-3 ملاعق عجة مقلية</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف رغيف فينو بالجبن الفيتا</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>180 سعر نشويات بشكل أساسي</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="70" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب بابا غنوج (بنقطة زيت)</span><span class="item-calories">70 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="70" onchange="calculateMultiTotal()"><div class="item-details"><span>70 سعر نشويات بشكل أساسي</span><span class="item-calories">70 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
+                </div>
+                <div class="manual-cal-container">
+                    <input type="number" class="manual-cal-input" placeholder="إضافة سعرات حرارية يدويًا للإفطار..." oninput="calculateTotalCalories()">
                 </div>
             </div>
 
-            <!-- وجبة الغداء والتصنيفات المشتركة معها للتخسيس -->
-            <div class="calc-row">
-                <div class="calc-label">🍲 وجبة الغداء المشتركة (غداء / غداء وسناك / غداء وعشاء):</div>
-                <div class="multi-select-grid">
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="235" onchange="calculateMultiTotal()"><div class="item-details"><span>كوب مكرونة بالبروتين</span><span class="item-calories">235 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+            <div class="meal-section" data-meal="lunch">
+                <div class="meal-title">وجبة الغداء</div>
+                <div class="food-list">
+                    <div class="food-item" data-category="diet" data-name="صدر دجاج مشوي">
+                        <input type="checkbox" value="165" onchange="calculateTotalCalories()"> <span>صدر دجاج مشوي 100ج (165 سعرة)</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="235" onchange="calculateMultiTotal()"><div class="item-details"><span>235 سعر نشويات بشكل أساسي</span><span class="item-calories">235 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+                    <div class="food-item" data-category="diet" data-name="سلطة خضراء">
+                        <input type="checkbox" value="35" onchange="calculateTotalCalories()"> <span>سلطة خضراء كبيرة (35 سعرة)</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف رغيف بلدي بروتين</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+                    <div class="food-item" data-category="bulk" data-name="أرز بسمتي باللحم">
+                        <input type="checkbox" value="520" onchange="calculateTotalCalories()"> <span>طبق أرز بسمتي باللحم (520 سعرة) [زيادة وزن]</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="180" onchange="calculateMultiTotal()"><div class="item-details"><span>180 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">180 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+                    <div class="food-item" data-category="bulk" data-name="معكرونة بالبشاميل">
+                        <input type="checkbox" value="450" onchange="calculateTotalCalories()"> <span>معكرونة بالبشاميل قطعة (450 سعرة) [زيادة وزن]</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="175" onchange="calculateMultiTotal()"><div class="item-details"><span>كوب أرز بلبن</span><span class="item-calories">175 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="175" onchange="calculateMultiTotal()"><div class="item-details"><span>كوب شوربة عدس</span><span class="item-calories">175 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="175" onchange="calculateMultiTotal()"><div class="item-details"><span>175 سعر نشويات بشكل أساسي</span><span class="item-calories">175 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="165" onchange="calculateMultiTotal()"><div class="item-details"><span>محشي باذنجان (قطعة 1)</span><span class="item-calories">165 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="75" onchange="calculateMultiTotal()"><div class="item-details"><span>165 سعر نشويات بشكل أساسي</span><span class="item-calories">75 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب أرز معمر لايت وقطعة بروتين</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب كبسة وقطعة بروتين</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>155 سعر نشويات بشكل أساسي</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="147.5" onchange="calculateMultiTotal()"><div class="item-details"><span>أرز مبهر 5 ملاعق</span><span class="item-calories">147.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="147.5" onchange="calculateMultiTotal()"><div class="item-details"><span>4 ملاعق مكرونة بالصلصة الخفيفة</span><span class="item-calories">147.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="140" onchange="calculateMultiTotal()"><div class="item-details"><span>كوب طبيخ بالخضراوات و قطعة بروتين</span><span class="item-calories">140 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="140" onchange="calculateMultiTotal()"><div class="item-details"><span>140 سعر نشويات بشكل أساسي</span><span class="item-calories">140 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="75" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب بروتين مع طماطم</span><span class="item-calories">75 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="75" onchange="calculateMultiTotal()"><div class="item-details"><span>75 سعر بروتين بشكل أساسي</span><span class="item-calories">75 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    
-                    <!-- غداء / سناك -->
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="205" onchange="calculateMultiTotal()"><div class="item-details"><span>5 حبات ورق عنب</span><span class="item-calories">205 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="205" onchange="calculateMultiTotal()"><div class="item-details"><span>205 سعر نشويات بشكل أساسي</span><span class="item-calories">205 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعة كبيبة أرز</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعة ستربس متوسطة</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعتين ستربس اير فراير متوسطة</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف قطعة بانية</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعة بانيه اير فراير</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="155" onchange="calculateMultiTotal()"><div class="item-details"><span>155 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">155 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="37.5" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعة بروتين مشوي</span><span class="item-calories">37.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="37.5" onchange="calculateMultiTotal()"><div class="item-details"><span>38 سعر بروتين بشكل أساسي</span><span class="item-calories">37.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="37.5" onchange="calculateMultiTotal()"><div class="item-details"><span>38 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">37.5 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    
-                    <!-- غداء / عشاء -->
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>شريحة توست بمسحة زبدة محمص</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب بطاطس مسلوقة بنصف معلقة زبدة او ملعقة قشطة</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>3 ملاعق مكرونة بالزبدة والجبنة الرومي/البرميزان (كمية تذوّق)</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>3 ملاعق أرز أبيض بالسمن</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>125 سعر نشويات بشكل أساسي</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
+                </div>
+                <div class="manual-cal-container">
+                    <input type="number" class="manual-cal-input" placeholder="إضافة سعرات حرارية يدويًا للغداء..." oninput="calculateTotalCalories()">
                 </div>
             </div>
 
-            <!-- السناكات والخيارات العامة للتخسيس -->
-            <div class="calc-row">
-                <div class="calc-label">🍿 السناكات والخيارات العامة المقاسة (سناك أو لكل الوجبات):</div>
-                <div class="multi-select-grid">
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="170" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب أرز بلبن سكر معتدل</span><span class="item-calories">170 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+            <div class="meal-section" data-meal="dinner">
+                <div class="meal-title">وجبة العشاء</div>
+                <div class="food-list">
+                    <div class="food-item" data-category="diet" data-name="زبادي طبيعي">
+                        <input type="checkbox" value="60" onchange="calculateTotalCalories()"> <span>زبادي طبيعي قليل الدسم (60 سعرة)</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="200" onchange="calculateMultiTotal()"><div class="item-details"><span>200 سعر نشويات بشكل أساسي</span><span class="item-calories">200 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+                    <div class="food-item" data-category="diet" data-name="تونا بالماء">
+                        <input type="checkbox" value="120" onchange="calculateTotalCalories()"> <span>علبة تونة بالماء (120 سعرة)</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="170" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب بطاطا بالقشطة المشوية</span><span class="item-calories">170 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
+                    <div class="food-item" data-category="bulk" data-name="مكسرات مشكلة">
+                        <input type="checkbox" value="200" onchange="calculateTotalCalories()"> <span>قبضة مكسرات مشكلة (200 سعرة) [زيادة وزن]</span>
                     </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="170" onchange="calculateMultiTotal()"><div class="item-details"><span>170 سعر نشويات بشكل أساسي</span><span class="item-calories">170 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="170" onchange="calculateMultiTotal()"><div class="item-details"><span>3 أكواب فشار بالزبدة</span><span class="item-calories">170 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <!-- فطار/غداء/عشاء المشترك الخفيف -->
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="25" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب سلطة خضراء (مع تقليل الزيت)</span><span class="item-calories">25 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="25" onchange="calculateMultiTotal()"><div class="item-details"><span>25 سعر نشويات بشكل أساسي</span><span class="item-calories">25 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="25" onchange="calculateMultiTotal()"><div class="item-details"><span>25 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">25 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
+                </div>
+                <div class="manual-cal-container">
+                    <input type="number" class="manual-cal-input" placeholder="إضافة سعرات حرارية يدويًا للعشاء..." oninput="calculateTotalCalories()">
                 </div>
             </div>
         </div>
 
-        <!-- ================= قسم نظام زيادة الوزن ================= -->
-        <div id="section-gain-diet" class="diet-conditional-section">
-            
-            <!-- وجبات زيادة الوزن الرئيسية -->
-            <div class="calc-row">
-                <div class="calc-label">🍽️ الوجبات والخيارات الأساسية (غداء/فطار/عشاء):</div>
-                <div class="multi-select-grid">
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="195" onchange="calculateMultiTotal()"><div class="item-details"><span>1/2 رغيف صغير بروتين محمص بالزيت</span><span class="item-calories">195 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="195" onchange="calculateMultiTotal()"><div class="item-details"><span>بيتزا صغيرة بالجبن أو بروتين</span><span class="item-calories">195 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="195" onchange="calculateMultiTotal()"><div class="item-details"><span>فطيرة جبنة صغيرة</span><span class="item-calories">195 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="195" onchange="calculateMultiTotal()"><div class="item-details"><span>195 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">195 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- السناكات والحلويات لزيادة الوزن -->
-            <div class="calc-row">
-                <div class="calc-label">🥞 السناكات والحلويات الدسمة لزيادة الوزن:</div>
-                <div class="multi-select-grid">
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="225" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعة كنافة بالجبنة</span><span class="item-calories">225 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="225" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعتين قطايف بالجبنة</span><span class="item-calories">225 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="225" onchange="calculateMultiTotal()"><div class="item-details"><span>225 سعر نشويات بشكل أساسي</span><span class="item-calories">225 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="205" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعة بسبوسة</span><span class="item-calories">205 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="205" onchange="calculateMultiTotal()"><div class="item-details"><span>فطير بلدي صغير (حجم الكف)</span><span class="item-calories">205 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="205" onchange="calculateMultiTotal()"><div class="item-details"><span>205 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">205 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="165" onchange="calculateMultiTotal()"><div class="item-details"><span>قطايف بالجوز حبة واحدة (متوسطة 45 غرام)</span><span class="item-calories">165 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="165" onchange="calculateMultiTotal()"><div class="item-details"><span>قرص فلاحي بالسمسم</span><span class="item-calories">165 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="165" onchange="calculateMultiTotal()"><div class="item-details"><span>حبة بلح شام</span><span class="item-calories">165 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="165" onchange="calculateMultiTotal()"><div class="item-details"><span>حبتان جلاش</span><span class="item-calories">165 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="165" onchange="calculateMultiTotal()"><div class="item-details"><span>165 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">165 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="160" onchange="calculateMultiTotal()"><div class="item-details"><span>نصف كوب مهلبية</span><span class="item-calories">160 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="160" onchange="calculateMultiTotal()"><div class="item-details"><span>160 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">160 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    
-                    <!-- غداء / سناك لزيادة الوزن -->
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>قطعة معمول بالتمر</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>حبة سمبوسة بروتين</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>حبة سمبوسة جبن</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                    <div class="checkbox-card" onclick="handleCardClick(event, this)">
-                        <div class="card-right-side"><input type="checkbox" value="125" onchange="calculateMultiTotal()"><div class="item-details"><span>125 سعر كربوهيدرات بشكل أساسي</span><span class="item-calories">125 سعر</span></div></div>
-                        <div class="quantity-wrapper" onclick="event.stopPropagation();"><span class="quantity-label">✕</span><input type="number" class="qty-input" value="1" min="1" oninput="calculateMultiTotal()"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="summary-text">
+            مجموع السعرات المستهلكة لليوم الحالي: <span id="totalCaloriesDisplay">0</span> سعرة
         </div>
-
-        <!-- المجموع النهائي المربوط بعمليات الضرب والترحيل -->
-        <div class="total-box">
-            إجمالي السعرات المحددة: <span id="calc-total">0</span> سعر
-            <button type="button" class="push-data-btn" onclick="pushTotalToMonthlyTable()">💾 ترحيل السعرات المحسوبة وحفظها في الجدول الشهري</button>
-        </div>
+        <button class="nav-btn tdee" style="margin-top:15px;" onclick="saveDailyCalories()">حفظ وإضافة لجدول الشهر</button>
     </div>
 
-    <!-- لوحة المتابعة السريعة والنتائج -->
-    <div class="dashboard-grid">
-        <div class="dash-card success">
-            <div class="dash-title">أيام الالتزام</div>
-            <div id="web-committed-days" class="dash-value">0 يوم</div>
-        </div>
-        <div class="dash-card">
-            <div class="dash-title">متوسط السعرات</div>
-            <div id="web-avg-calories" class="dash-value">0 سعر</div>
-        </div>
-        <div class="dash-card warning">
-            <div class="dash-title">أقل وزن مسجل</div>
-            <div id="web-min-weight" class="dash-value">- كجم</div>
-        </div>
+    <div class="chart-container">
+        <h3 style="text-align: center; margin-top: 0; color: #1a365d;">مخطط الالتزام ومتابعة السعرات لـ 30 يومًا</h3>
+        <p style="text-align: center; font-size: 12px; margin: 0 0 10px 0; color: #5a738e;">الأيام الملونة بالأخضر تعني أنه تم تسجيل السعرات فيها</p>
+        <div class="month-grid" id="monthGrid">
+            </div>
     </div>
 
-    <div class="chart-box">
-        <h3>📈 مقارنة السعرات المقاسة</h3>
-        <div class="bar-chart">
-            <div class="bar-container">
-                <div id="chart-consumed-bar" class="bar consumed-bar"></div>
-                <div class="bar-label">المستهلكة</div>
-            </div>
-            <div class="bar-container">
-                <div id="chart-target-bar" class="bar target-bar"></div>
-                <div class="bar-label">المستهدفة</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- جدول المتابعة الشهرية المستدام المحفوظ داخل المتصفح -->
-    <div class="table-container" style="border: 1px solid #1a365d; border-top: none;">
-        <div class="section-title" style="background-color: #1a365d;">📅 جدول المتابعة اليومية الدائم (حفظ تلقائي صلب وضد الإغلاق)</div>
-        <table class="diet-table" style="text-align:center;">
-            <thead>
-                <tr style="background-color: #2c3e50; color: white;">
-                    <th style="width: 18%;">اليوم</th>
-                    <th style="width: 20%;">الوزن</th>
-                    <th style="width: 22%;">المستهلكة</th>
-                    <th style="width: 22%;">الهدف</th>
-                    <th style="width: 18%;">الالتزام</th>
-                </tr>
-            </thead>
-            <tbody id="monthly-table-rows">
-                <!-- مبني ديناميكياً ومحمي بالـ LocalStorage -->
-            </tbody>
-        </table>
-    </div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const selectDietType = document.getElementById("select-diet-type");
-    const sectionLose = document.getElementById("section-lose-diet");
-    const sectionGain = document.getElementById("section-gain-diet");
+    // تهيئة مصفوفة الشهر لحفظ السعرات لـ 30 يوم
+    let monthlyData = JSON.parse(localStorage.getItem('dietit_monthly_data')) || Array(30).fill(0);
+    let currentDayIndex = 0; // لتبسيط العرض نعتبر اليوم الحالي يبدأ من الصفر
 
-    selectDietType.addEventListener("change", function() {
-        resetAllCheckboxes();
-        if (this.value === "lose") {
-            sectionLose.style.display = "block";
-            sectionGain.style.display = "none";
-        } else if (this.value === "gain") {
-            sectionLose.style.display = "none";
-            sectionGain.style.display = "block";
-        } else {
-            sectionLose.style.display = "none";
-            sectionGain.style.display = "none";
-        }
-    });
+    window.onload = function() {
+        filterFoodsByGoal();
+        renderMonthlyChart();
+    };
 
-    const tableBody = document.getElementById("monthly-table-rows");
-    for (let day = 1; day <= 30; day++) {
-        let tr = document.createElement("tr");
-        tr.setAttribute("data-day", day);
-        
-        let savedWeight = localStorage.getItem(`day_${day}_weight`) || "";
-        let savedConsumed = localStorage.getItem(`day_${day}_consumed`) || "";
-        let savedTarget = localStorage.getItem(`day_${day}_target`) || "";
+    // منطق تصفية الأطعمة بناءً على الهدف (زيادة الوزن تشمل الفئتين معاً)
+    function filterFoodsByGoal() {
+        const goal = document.getElementById('goalSelect').value;
+        const foodItems = document.querySelectorAll('.food-item');
 
-        tr.innerHTML = `
-            <td style="font-weight: bold; background-color: #fcfcfc; font-size:12px;">يوم ${day}</td>
-            <td><input type="number" class="w-input" inputmode="decimal" step="0.1" placeholder="-" value="${savedWeight}" oninput="saveRowData(${day})"></td>
-            <td><input type="number" class="c-consumed" id="consumed-day-${day}" inputmode="numeric" placeholder="0" value="${savedConsumed}" oninput="saveRowData(${day})"></td>
-            <td><input type="number" class="c-target" inputmode="numeric" placeholder="الهدف" value="${savedTarget}" oninput="saveRowData(${day})"></td>
-            <td class="day-status" style="font-weight: bold; color: #95a5a6; font-size:11px;">في الانتظار</td>
-        `;
-        tableBody.appendChild(tr);
+        foodItems.forEach(item => {
+            const category = item.getAttribute('data-category');
+            if (goal === 'gain') {
+                // تظهر جميع الأطعمة في حال اختيار زيادة الوزن
+                item.style.display = 'flex';
+            } else {
+                // تظهر أطعمة الدايت والحفاظ فقط وتختفي أطعمة زيادة الوزن الكثيفة
+                if (category === 'bulk') {
+                    item.style.display = 'none';
+                    item.querySelector('input').checked = false; // إلغاء التحديد تلقائياً
+                } else {
+                    item.style.display = 'flex';
+                }
+            }
+        });
+        calculateTotalCalories();
+        searchFoods(); // إعادة تطبيق البحث إن وُجد نص
     }
 
-    updateDashboardAndCharts();
-    tableBody.addEventListener("input", updateDashboardAndCharts);
-});
+    // ميزة البحث الذكي في الأطعمة والوجبات المتاحة
+    function searchFoods() {
+        const searchText = document.getElementById('foodSearch').value.toLowerCase();
+        const goal = document.getElementById('goalSelect').value;
+        const foodItems = document.querySelectorAll('.food-item');
 
-function handleCardClick(event, cardElem) {
-    const checkbox = cardElem.querySelector('input[type="checkbox"]');
-    
-    if (event.target.classList.contains('qty-input') || event.target.classList.contains('quantity-wrapper')) {
-        return;
-    }
+        foodItems.forEach(item => {
+            const name = item.getAttribute('data-name').toLowerCase();
+            const category = item.getAttribute('data-category');
+            
+            // التحقق أولاً من مطابقة شروط التصفية حسب الهدف لتجنب إظهار عناصر خاطئة
+            let matchesGoal = (goal === 'gain' || category !== 'bulk');
+            let matchesSearch = name.includes(searchText);
 
-    if (event.target !== checkbox) {
-        checkbox.checked = !checkbox.checked;
-    }
-    
-    if (checkbox.checked) {
-        cardElem.classList.add("selected");
-        cardElem.querySelector(".qty-input").value = 1;
-    } else {
-        cardElem.classList.remove("selected");
-    }
-    calculateMultiTotal();
-}
-
-function calculateMultiTotal() {
-    let total = 0;
-    const activeSection = document.getElementById("select-diet-type").value;
-    let containerSelector = "";
-    
-    if (activeSection === "lose") {
-        containerSelector = "#section-lose-diet";
-    } else if (activeSection === "gain") {
-        containerSelector = "#section-gain-diet";
-    }
-    
-    if (containerSelector) {
-        const cards = document.querySelectorAll(`${containerSelector} .checkbox-card`);
-        cards.forEach(card => {
-            const box = card.querySelector("input[type='checkbox']");
-            if (box && box.checked) {
-                const calories = parseFloat(box.value) || 0;
-                const qtyInput = card.querySelector(".qty-input");
-                const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : 1;
-                
-                total += (calories * qty);
+            if (matchesGoal && matchesSearch) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
             }
         });
     }
-    
-    document.getElementById("calc-total").textContent = total;
-}
 
-function resetAllCheckboxes() {
-    const checkboxes = document.querySelectorAll(".checkbox-card input[type='checkbox']");
-    checkboxes.forEach(box => {
-        box.checked = false;
-        const card = box.closest(".checkbox-card");
-        card.classList.remove("selected");
-        const qtyInp = card.querySelector(".qty-input");
-        if(qtyInp) qtyInp.value = 1;
-    });
-    document.getElementById("calc-total").textContent = "0";
-}
+    // حساب إجمالي السعرات مع دمج المدخلات اليدوية لكل وجبة
+    function calculateTotalCalories() {
+        let total = 0;
 
-function saveRowData(day) {
-    const row = document.querySelector(`tr[data-day="${day}"]`);
-    const weight = row.querySelector(".w-input").value;
-    const consumed = row.querySelector(".c-consumed").value;
-    const target = row.querySelector(".c-target").value;
-
-    localStorage.setItem(`day_${day}_weight`, weight);
-    localStorage.setItem(`day_${day}_consumed`, consumed);
-    localStorage.setItem(`day_${day}_target`, target);
-}
-
-function pushTotalToMonthlyTable() {
-    const totalCalories = parseFloat(document.getElementById("calc-total").textContent) || 0;
-    
-    if (totalCalories === 0) {
-        alert("⚠️ الإجمالي الحالي هو 0 سعر! يرجى تحديد الأكلات والكميات أولاً قبل الترحيل.");
-        return;
-    }
-
-    let targetDay = prompt("📝 أدخل رقم اليوم الذي ترغب في ترحيل وحفظ السعرات إليه (من 1 إلى 30):");
-    if (targetDay === null) return; 
-
-    let dayNumber = parseInt(targetDay);
-    if (isNaN(dayNumber) || dayNumber < 1 || dayNumber > 30) {
-        alert("❌ رقم اليوم غير صحيح! يرجى إدخل رقم صحيح يقع بين 1 و 30.");
-        return;
-    }
-
-    const targetInput = document.getElementById(`consumed-day-${dayNumber}`);
-    if (targetInput) {
-        targetInput.value = totalCalories;
-        saveRowData(dayNumber); 
-        updateDashboardAndCharts(); 
-        alert(`✔️ تم ترحيل وحفظ ${totalCalories} سعر بنجاح لليوم رقم [ ${dayNumber} ] بالجدول والذاكرة.`);
-    }
-}
-
-function updateDashboardAndCharts() {
-    let totalConsumed = 0;
-    let totalTarget = 0;
-    let consumedCount = 0;
-    let targetCount = 0;
-    let registeredWeights = [];
-    let committedDaysCount = 0;
-
-    const tableBody = document.getElementById("monthly-table-rows");
-    const allRows = tableBody.querySelectorAll("tr");
-
-    allRows.forEach(row => {
-        const weightVal = row.querySelector(".w-input").value;
-        const consumedVal = row.querySelector(".c-consumed").value;
-        const targetVal = row.querySelector(".c-target").value;
-        const statusCell = row.querySelector(".day-status");
-
-        if (consumedVal && targetVal) {
-            let consumed = parseFloat(consumedVal);
-            let target = parseFloat(targetVal);
-            
-            if (consumed <= target) {
-                statusCell.textContent = "✔️ ممتاز";
-                statusCell.style.color = "#2ecc71";
-                committedDaysCount++;
-            } else {
-                statusCell.textContent = "⚠️ متجاوز";
-                statusCell.style.color = "#d35400";
+        // 1. حساب السعرات من مربعات الاختيار النشطة والمرئية فقط
+        const checkboxes = document.querySelectorAll('.food-item input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            if (cb.checked && cb.closest('.food-item').style.display !== 'none') {
+                total += parseInt(cb.value) || 0;
             }
-        } else {
-            statusCell.textContent = "في الانتظار";
-            statusCell.style.color = "#95a5a6";
-        }
+        });
 
-        if (consumedVal) { totalConsumed += parseFloat(consumedVal); consumedCount++; }
-        if (targetVal) { totalTarget += parseFloat(targetVal); targetCount++; }
-        if (weightVal) { registeredWeights.push(parseFloat(weightVal)); }
-    });
+        // 2. حساب السعرات المكتوبة يدوياً في الخانات المخصصة أسفل الوجبات
+        const manualInputs = document.querySelectorAll('.manual-cal-input');
+        manualInputs.forEach(input => {
+            total += parseInt(input.value) || 0;
+        });
 
-    document.getElementById("web-committed-days").textContent = committedDaysCount + " يوم";
-    let avgConsumed = consumedCount > 0 ? Math.round(totalConsumed / consumedCount) : 0;
-    document.getElementById("web-avg-calories").textContent = avgConsumed + " سعر";
-    document.getElementById("web-min-weight").textContent = registeredWeights.length > 0 ? Math.min(...registeredWeights) + " كجم" : "- كجم";
+        document.getElementById('totalCaloriesDisplay').innerText = total;
+        return total;
+    }
 
-    let avgTarget = targetCount > 0 ? Math.round(totalTarget / targetCount) : 0;
-    let maxVal = Math.max(avgConsumed, avgTarget, 1000);
-    
-    document.getElementById("chart-consumed-bar").style.height = (consumedCount > 0 ? (avgConsumed / maxVal) * 100 : 0) + "%";
-    document.getElementById("chart-target-bar").style.height = (targetCount > 0 ? (avgTarget / maxVal) * 100 : 0) + "%";
-}
+    // حفظ البيانات وتحديث مخطط الشهر بالكامل
+    function saveDailyCalories() {
+        const currentCalories = calculateTotalCalories();
+        
+        // حفظ القيمة في اليوم الحالي وضبط المؤشر لليوم التالي
+        monthlyData[currentDayIndex] = currentCalories;
+        localStorage.setItem('dietit_monthly_data', JSON.stringify(monthlyData));
+        
+        alert(`تم حفظ ${currentCalories} سعرة في سجل اليوم رقم ${currentDayIndex + 1}!`);
+        
+        // الانتقال المحاكي لليوم التالي لمشاهدة تطور الشهر بالكامل
+        currentDayIndex = (currentDayIndex + 1) % 30;
+        
+        renderMonthlyChart();
+    }
+
+    // بناء وعرض شبكة أيام الشهر بالكامل (30 يومًا)
+    function renderMonthlyChart() {
+        const grid = document.getElementById('monthGrid');
+        grid.innerHTML = '';
+
+        monthlyData.forEach((calories, index) => {
+            const cell = document.createElement('div');
+            cell.className = 'day-cell';
+            
+            if (calories > 0) {
+                cell.classList.add('active');
+                cell.innerHTML = `يوم ${index + 1}<br><span style="font-size:9px;">${calories}ع</span>`;
+            } else {
+                cell.innerHTML = `يوم ${index + 1}<br><span style="font-size:9px; color:#94a3b8;">-</span>`;
+            }
+            
+            grid.appendChild(cell);
+        });
+    }
 </script>
 
 </body>
